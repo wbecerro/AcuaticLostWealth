@@ -1,0 +1,10 @@
+name: AcuaticLostWealth
+version: 1.0
+main: wbe.acuaticLostWealth.AcuaticLostWealth
+api-version: 1.21
+author: wbe
+commands:
+  AcuaticLostWealth:
+    description: AcuaticLostWealth main command
+    aliases: [alw]
+    permission: acuaticlostwealth.command

@@ -1,0 +1,90 @@
+Config:
+  baseItemChance: 15
+  baseCreatureChance: 0
+
+Messages:
+  noPermission: "&b[&cPesca&b] &eNo tienes permiso para hacer esto."
+  rodGiven: "&b[&cPesca&b] &eHas conseguido una &lCaña de Ebisu."
+  rodArguments: "&b[&cPesca&b] &eEl uso es /acuaticlistwealth rod <Prob. objeto> <Prob. criatura> <Prob. objeto alt.> <Prob. criatura alt.> [jugador]."
+  notEnoughArgs: "&b[&cPesca&b] &eNo has especificado suficientes argumentos."
+  modeChanged: "&d&lModo cambiado a %mode%"
+  doubleDropAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de doble recompensa al objeto."
+  doubleDropArguments: "&b[&cPesca&b] &eEl uso es /acuaticlistwealth double <Probabilidad>."
+  doubleDrop: "&b[&cPesca&b] &eHas encontrado dos recompensas a la vez."
+  reload: "&b[&cPesca&b] &eEl plugin se ha recargado con éxito."
+  help:
+    - "&b/alw &eMuestra esta página."
+    - "&b/alw rod <Prob. objeto> <Prob. criatura> <Prob. objeto alt.> <Prob. criatura alt.> [jugador] &eDa una &lCaña de Ebisu."
+    - "&b/alw double <Probabilidad> &eAñade probabilidad de doble recompensa al objeto."
+    - "&b/alw reload &eRecarga la configuración del plugin."
+    - "&b"
+    - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
+
+Items:
+  FishingRod:
+    name: "&e&l≈ Caña de Ebisu ≈"
+    lore:
+      - "&7"
+      - "&7Caña del dios de la fortuna y la pesca."
+      - "&7Concede suerte al pescar y posee 2 modos."
+      - "&cSHIFT + Clic izquierdo &7para alternar."
+      - "&7"
+    mode: "&7Modo: &d%mode%"
+    itemChance: "&7Probabilidad de objetos: &d%item_chance%%"
+    creatureChance: "&7Probabilidad de criaturas: &d%creature_chance%%"
+
+Rarities:
+  common:
+    prefix: "&f◆ COMMON ◆ "
+    weight: 50
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
+  uncommon:
+    prefix: "&a◆ UNCOMMON ◆ "
+    weight: 30
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
+  rare:
+    prefix: "&9◆ RARE ◆ "
+    weight: 10
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
+  epic:
+    prefix: "&5◆ EPIC ◆ "
+    weight: 6
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
+  legendary:
+    prefix: "&6◆ LEGENDARY ◆ "
+    weight: 3
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
+  mythic:
+    prefix: "&d◆ MYTHIC ◆ "
+    weight: 1
+    creatures:
+      - SkeletonKing
+    rewards:
+      golden_apple:
+        suffix: "&f1x Golden Apple"
+        command: "give %player% golden_apple 1"
