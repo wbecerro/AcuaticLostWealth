@@ -38,7 +38,9 @@ public class Utilites {
                 .replace("%creature_chance%", String.valueOf(creatureChance)));
 
         meta.setLore(lore);
+        rod.setItemMeta(meta);
 
+        return rod;
     }
 
     private int findLine(ItemStack item, String line) {

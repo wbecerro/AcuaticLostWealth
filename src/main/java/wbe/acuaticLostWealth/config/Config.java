@@ -14,6 +14,8 @@ public class Config {
 
     public int baseItemChance;
     public int baseCreatureChance;
+    public String itemMode;
+    public String creatureMode;
 
     public String rodName;
     public List<String> rodLore = new ArrayList<>();
@@ -27,13 +29,15 @@ public class Config {
     public Config(FileConfiguration config) {
         this.config = config;
 
-        this.baseItemChance = config.getInt("Config.baseItemChance");
-        this.baseCreatureChance = config.getInt("Config.baseCreatureChance");
-        this.rodName = config.getString("Items.FishingRod.name").replace("&", "§");
-        this.rodLore = config.getStringList("Items.FishingRod.lore");
-        this.rodMode = config.getString("Items.FishingRod.mode").replace("&", "§");
-        this.rodItemChance = config.getString("Items.FishingRod.itemChance").replace("&", "§");
-        this.rodCreatureChance = config.getString("Items.FishingRod.creatureChance").replace("&", "§");
+        baseItemChance = config.getInt("Config.baseItemChance");
+        baseCreatureChance = config.getInt("Config.baseCreatureChance");
+        itemMode = config.getString("Config.itemMode").replace("&", "§");
+        creatureMode = config.getString("Config.creatureMode").replace("&", "§");
+        rodName = config.getString("Items.FishingRod.name").replace("&", "§");
+        rodLore = config.getStringList("Items.FishingRod.lore");
+        rodMode = config.getString("Items.FishingRod.mode").replace("&", "§");
+        rodItemChance = config.getString("Items.FishingRod.itemChance").replace("&", "§");
+        rodCreatureChance = config.getString("Items.FishingRod.creatureChance").replace("&", "§");
 
         loadRarities();
     }

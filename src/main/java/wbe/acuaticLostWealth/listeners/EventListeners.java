@@ -14,6 +14,6 @@ public class EventListeners {
     public void initializeListeners() {
         PluginManager pluginManager = plugin.getServer().getPluginManager();
 
-        //pluginManager.registerEvents(new EntityDeathListeners(plugin), plugin);
+        pluginManager.registerEvents(new PlayerInteractListeners(plugin), plugin);
     }
 }

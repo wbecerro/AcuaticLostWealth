@@ -1,6 +1,8 @@
 Config:
   baseItemChance: 15
   baseCreatureChance: 0
+  itemMode: "Objetos"
+  creatureMode: "Criaturas"
 
 Messages:
   noPermission: "&b[&cPesca&b] &eNo tienes permiso para hacer esto."

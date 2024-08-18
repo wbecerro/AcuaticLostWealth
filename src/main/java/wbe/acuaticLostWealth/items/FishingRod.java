@@ -32,9 +32,9 @@ public class FishingRod extends ItemStack {
         for(String line : AcuaticLostWealth.config.rodLore) {
             lore.add(line.replace("&", "§"));
         }
-        lore.add(AcuaticLostWealth.config.rodMode.replace("%mode%", "Objetos"));
+        lore.add(AcuaticLostWealth.config.rodMode.replace("%mode%", AcuaticLostWealth.config.itemMode));
         lore.add(AcuaticLostWealth.config.rodItemChance.replace("%item_chance%", String.valueOf(baseItemChance)));
-        lore.add(AcuaticLostWealth.config.rodCreatureChance.replace("%creature_chance%", String.valueOf(alteredCreatureChance)));
+        lore.add(AcuaticLostWealth.config.rodCreatureChance.replace("%creature_chance%", String.valueOf(baseCreatureChance)));
         meta.setLore(lore);
         setItemMeta(meta);
 
