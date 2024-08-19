@@ -29,7 +29,7 @@ Items:
       - "&7"
       - "&7Caña del dios de la fortuna y la pesca."
       - "&7Concede suerte al pescar y posee 2 modos."
-      - "&cSHIFT + Clic izquierdo &7para alternar."
+      - "&cSHIFT + Soltar &7para alternar."
       - "&7"
     mode: "&7Modo: &d%mode%"
     itemChance: "&7Probabilidad de objetos: &d%item_chance%%"
@@ -41,6 +41,7 @@ Rarities:
     weight: 50
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"
@@ -50,6 +51,7 @@ Rarities:
     weight: 30
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"
@@ -59,6 +61,7 @@ Rarities:
     weight: 10
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"
@@ -68,6 +71,7 @@ Rarities:
     weight: 6
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"
@@ -77,6 +81,7 @@ Rarities:
     weight: 3
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"
@@ -86,6 +91,7 @@ Rarities:
     weight: 1
     creatures:
       - SkeletonKing
+    creatureSpawn: "&fA %creature% &fhas spawned."
     rewards:
       golden_apple:
         suffix: "&f1x Golden Apple"

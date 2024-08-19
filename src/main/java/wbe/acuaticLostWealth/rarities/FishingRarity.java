@@ -11,14 +11,17 @@ public class FishingRarity {
 
     private List<String> creatures;
 
+    private String creatureSpawn;
+
     private List<Reward> rewards;
 
     private int rewardsSize;
 
-    public FishingRarity(String prefix, int weight, List<String> creatures, List<Reward> rewards) {
+    public FishingRarity(String prefix, int weight, List<String> creatures, String creatureSpawn, List<Reward> rewards) {
         this.prefix = prefix;
         this.weight = weight;
         this.creatures = creatures;
+        this.creatureSpawn = creatureSpawn;
         this.rewards = rewards;
         this.rewardsSize = rewards.size();
     }
@@ -45,6 +48,14 @@ public class FishingRarity {
 
     public void setCreatures(List<String> creatures) {
         this.creatures = creatures;
+    }
+
+    public String getCreatureSpawn() {
+        return creatureSpawn;
+    }
+
+    public void setCreatureSpawn(String creatureSpawn) {
+        this.creatureSpawn = creatureSpawn;
     }
 
     public List<Reward> getRewards() {

@@ -49,8 +49,9 @@ public class Config {
             int weight = config.getInt("Rarities." + rarity + ".weight");
             totalRarityWeight += weight;
             List<String> creatures = config.getStringList("Rarities." + rarity + ".creatures");
+            String creatureSpawn = config.getString("Rarities." + rarity + ".creatureSpawn").replace("&", "§");
             List<Reward> rewards = getRewards(rarity);
-            rarities.add(new FishingRarity(prefix, weight, creatures, rewards));
+            rarities.add(new FishingRarity(prefix, weight, creatures, creatureSpawn, rewards));
         }
     }
 
@@ -58,7 +59,7 @@ public class Config {
         List<Reward> finalRewards = new ArrayList<>();
         Set<String> rewards = config.getConfigurationSection("Rarities." + rarity + ".rewards").getKeys(false);
         for(String reward : rewards) {
-            String suffix = config.getString("Rarities." + rarity + ".rewards." + reward + ".suffix");
+            String suffix = config.getString("Rarities." + rarity + ".rewards." + reward + ".suffix").replace("&", "§");
             String command = config.getString("Rarities." + rarity + ".rewards." + reward + ".command");
             finalRewards.add(new Reward(suffix, command));
         }

@@ -2,51 +2,43 @@ package wbe.acuaticLostWealth.listeners;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.util.Utilites;
 
-public class PlayerInteractListeners implements Listener {
+public class PlayerDropItemListeners implements Listener {
 
     private AcuaticLostWealth plugin;
 
     private Utilites utilites;
 
-    public PlayerInteractListeners(AcuaticLostWealth plugin) {
+    public PlayerDropItemListeners(AcuaticLostWealth plugin) {
         this.plugin = plugin;
         this.utilites = new Utilites(plugin);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void switchModeOnInteract(PlayerInteractEvent event) {
-        if(!event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-            return;
-        }
-
+    public void switchModeOnDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         if(!player.isSneaking()) {
             return;
         }
 
-        PlayerInventory inventory = player.getInventory();
-        ItemStack mainHand = inventory.getItemInMainHand();
-        if(mainHand.getType().equals(Material.AIR)) {
+        ItemStack droppedItem = event.getItemDrop().getItemStack();
+        if(droppedItem.getType().equals(Material.AIR)) {
             return;
         }
 
-        ItemMeta meta = mainHand.getItemMeta();
+        ItemMeta meta = droppedItem.getItemMeta();
         if(meta == null) {
             return;
         }
@@ -77,11 +69,12 @@ public class PlayerInteractListeners implements Listener {
             mode = 2;
         }
 
-        utilites.changeRodMode(mainHand, itemChance, creatureChance, newMode);
-        meta = mainHand.getItemMeta();
+        utilites.changeRodMode(droppedItem, itemChance, creatureChance, newMode);
+        meta = droppedItem.getItemMeta();
         meta.getPersistentDataContainer().set(modeKey, PersistentDataType.INTEGER, mode);
-        mainHand.setItemMeta(meta);
+        droppedItem.setItemMeta(meta);
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(AcuaticLostWealth.messages.modeChanged
                 .replace("%mode%", newMode)));
+        event.setCancelled(true);
     }
 }

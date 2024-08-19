@@ -2,9 +2,9 @@ package wbe.acuaticLostWealth.rarities;
 
 public class Reward {
 
-    public String suffix;
+    private String suffix;
 
-    public String command;
+    private String command;
 
     public Reward(String suffix, String command) {
         this.suffix = suffix;
