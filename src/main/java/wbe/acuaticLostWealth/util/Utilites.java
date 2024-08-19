@@ -1,5 +1,6 @@
 package wbe.acuaticLostWealth.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -8,10 +9,12 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
+import wbe.acuaticLostWealth.config.Config;
 import wbe.acuaticLostWealth.items.FishingRod;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -151,6 +154,47 @@ public class Utilites {
         return 0;
     }
 
+    public int getPlayerDoubleChance(Player player) {
+        int chance = 0;
+
+        PlayerInventory inventory = player.getInventory();
+        ItemStack mainHand = inventory.getItemInMainHand();
+        ItemStack offHand = inventory.getItemInOffHand();
+        ItemStack[] armor = inventory.getArmorContents();
+
+        if(!mainHand.getType().equals(Material.AIR)) {
+            chance += getItemDoubleChance(mainHand);
+        }
+
+        if(!offHand.getType().equals(Material.AIR)) {
+            chance += getItemDoubleChance(offHand);
+        }
+
+        for(ItemStack item : armor) {
+            if(item == null) {
+                continue;
+            }
+            chance += getItemDoubleChance(item);
+        }
+
+        return chance;
+    }
+
+    private int getItemDoubleChance(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if(meta == null) {
+            return 0;
+        }
+
+        // Caso general
+        NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseDoubleChance");
+        if(meta.getPersistentDataContainer().has(baseDoubleKey)) {
+            return meta.getPersistentDataContainer().get(baseDoubleKey, PersistentDataType.INTEGER);
+        }
+
+        return 0;
+    }
+
     public FishingRarity calculateRarity() {
         Random random = new Random();
         int randomNumber = random.nextInt(AcuaticLostWealth.config.totalRarityWeight);
@@ -177,6 +221,28 @@ public class Utilites {
         Random random = new Random();
 
         return rewards.get(random.nextInt(rewards.size()));
+    }
+
+    public void addDoubleDropChance(ItemStack item, int chance) {
+        NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseDoubleChance");
+        String loreLine = AcuaticLostWealth.config.rodDoubleChance
+                .replace("%double_chance%", String.valueOf(chance));
+        ItemMeta meta = item.getItemMeta();
+
+        if(meta == null) {
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
+        }
+
+        List<String> lore = new ArrayList<>();
+        if(meta.hasLore()) {
+            lore = meta.getLore();
+        }
+
+        lore.add(loreLine);
+        meta.setLore(lore);
+
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        item.setItemMeta(meta);
     }
 
     private int findLine(ItemStack item, String line) {

@@ -47,6 +47,7 @@ public class CommandListener implements CommandExecutor {
 
                 if(args.length < 5) {
                     sender.sendMessage(AcuaticLostWealth.messages.notEnoughArgs);
+                    sender.sendMessage(AcuaticLostWealth.messages.rodArguments);
                     return false;
                 }
 
@@ -71,6 +72,20 @@ public class CommandListener implements CommandExecutor {
 
                 plugin.reloadConfiguration();
                 sender.sendMessage(AcuaticLostWealth.messages.reload);
+            } else if(args[0].equalsIgnoreCase("double")) {
+                if(!sender.hasPermission("acuaticlistwealth.command.double")) {
+                    sender.sendMessage(AcuaticLostWealth.messages.noPermission);
+                    return false;
+                }
+
+                if(args.length < 2) {
+                    sender.sendMessage(AcuaticLostWealth.messages.notEnoughArgs);
+                    sender.sendMessage(AcuaticLostWealth.messages.doubleDropArguments);
+                    return false;
+                }
+
+                utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                sender.sendMessage(AcuaticLostWealth.messages.doubleDropAdded);
             }
         }
         return true;

@@ -39,34 +39,52 @@ public class PlayerFishListeners implements Listener {
         Random random = new Random();
         Player player = event.getPlayer();
         int creatureChance = utilites.getPlayerCreatureChance(player);
+        int itemChance = utilites.getPlayerItemChance(player);
+        int doubleChance = utilites.getPlayerDoubleChance(player);
 
-        if(random.nextInt(100) + 1 <= creatureChance) {
-            FishingRarity rarity = utilites.calculateRarity();
-            String mob = utilites.getRandomCreature(rarity);
-            Location location = event.getHook().getLocation().add(0, 1, 0);
-            MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
-            MythicMob mythicMob = mobExecutor.getMythicMob(mob).get();
-            mobExecutor.spawnMob(mob, location);
-            String message = rarity.getPrefix() + rarity.getCreatureSpawn().replace("%creature%", mythicMob.getDisplayName().get());
-            player.sendMessage(message);
-            if(event.getCaught() instanceof Item) {
-                event.getCaught().remove();
-            }
-            return;
+        int iterations = 1;
+        if(random.nextInt(100) + 1 <= doubleChance) {
+            iterations++;
+            player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
         }
 
-        int itemChance = utilites.getPlayerItemChance(player);
-        if(random.nextInt(100 ) + 1 <= itemChance) {
-            FishingRarity rarity = utilites.calculateRarity();
-            Reward reward = utilites.getRandomReward(rarity);
-            String command = reward.getCommand().replace("%player%", player.getName());
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-            String message = rarity.getPrefix() + reward.getSuffix();
-            player.sendMessage(message);
-            if(event.getCaught() instanceof Item) {
-                event.getCaught().remove();
+        for(int i=0;i<iterations;i++) {
+            if(random.nextInt(100) + 1 <= creatureChance) {
+                spawnCreature(event, player);
+                continue;
             }
-            return;
+
+
+            if(random.nextInt(100 ) + 1 <= itemChance) {
+                giveReward(event, player);
+                continue;
+            }
+        }
+    }
+
+    private void spawnCreature(PlayerFishEvent event, Player player) {
+        FishingRarity rarity = utilites.calculateRarity();
+        String mob = utilites.getRandomCreature(rarity);
+        Location location = event.getHook().getLocation().add(0, 1, 0);
+        MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
+        MythicMob mythicMob = mobExecutor.getMythicMob(mob).get();
+        mobExecutor.spawnMob(mob, location);
+        String message = rarity.getPrefix() + rarity.getCreatureSpawn().replace("%creature%", mythicMob.getDisplayName().get());
+        player.sendMessage(message);
+        if(event.getCaught() instanceof Item) {
+            event.getCaught().remove();
+        }
+    }
+
+    private void giveReward(PlayerFishEvent event, Player player) {
+        FishingRarity rarity = utilites.calculateRarity();
+        Reward reward = utilites.getRandomReward(rarity);
+        String command = reward.getCommand().replace("%player%", player.getName());
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+        String message = rarity.getPrefix() + reward.getSuffix();
+        player.sendMessage(message);
+        if(event.getCaught() instanceof Item) {
+            event.getCaught().remove();
         }
     }
 }

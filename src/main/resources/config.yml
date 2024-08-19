@@ -1,17 +1,18 @@
 Config:
   baseItemChance: 15
   baseCreatureChance: 0
+  baseDoubleDropChance: 0
   itemMode: "Objetos"
   creatureMode: "Criaturas"
 
 Messages:
   noPermission: "&b[&cPesca&b] &eNo tienes permiso para hacer esto."
   rodGiven: "&b[&cPesca&b] &eHas conseguido una &lCaña de Ebisu."
-  rodArguments: "&b[&cPesca&b] &eEl uso es /acuaticlistwealth rod <Prob. objeto> <Prob. criatura> <Prob. objeto alt.> <Prob. criatura alt.> [jugador]."
+  rodArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth rod <Prob. objeto> <Prob. criatura> <Prob. objeto alt.> <Prob. criatura alt.> [jugador]."
   notEnoughArgs: "&b[&cPesca&b] &eNo has especificado suficientes argumentos."
   modeChanged: "&d&lModo cambiado a %mode%"
   doubleDropAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de doble recompensa al objeto."
-  doubleDropArguments: "&b[&cPesca&b] &eEl uso es /acuaticlistwealth double <Probabilidad>."
+  doubleDropArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth double <Probabilidad>."
   doubleDrop: "&b[&cPesca&b] &eHas encontrado dos recompensas a la vez."
   reload: "&b[&cPesca&b] &eEl plugin se ha recargado con éxito."
   help:
@@ -34,6 +35,7 @@ Items:
     mode: "&7Modo: &d%mode%"
     itemChance: "&7Probabilidad de objetos: &d%item_chance%%"
     creatureChance: "&7Probabilidad de criaturas: &d%creature_chance%%"
+    doubleChance: "&7Probabilidad de doble: &d%double_chance%%"
 
 Rarities:
   common:

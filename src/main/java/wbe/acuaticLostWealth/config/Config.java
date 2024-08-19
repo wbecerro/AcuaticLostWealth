@@ -14,6 +14,7 @@ public class Config {
 
     public int baseItemChance;
     public int baseCreatureChance;
+    public int baseDoubleDropChance;
     public String itemMode;
     public String creatureMode;
 
@@ -22,6 +23,7 @@ public class Config {
     public String rodMode;
     public String rodItemChance;
     public String rodCreatureChance;
+    public String rodDoubleChance;
 
     public List<FishingRarity> rarities = new ArrayList<>();
     public int totalRarityWeight = 0;
@@ -31,6 +33,7 @@ public class Config {
 
         baseItemChance = config.getInt("Config.baseItemChance");
         baseCreatureChance = config.getInt("Config.baseCreatureChance");
+        baseDoubleDropChance = config.getInt("Config.baseDoubleDropChance");
         itemMode = config.getString("Config.itemMode").replace("&", "§");
         creatureMode = config.getString("Config.creatureMode").replace("&", "§");
         rodName = config.getString("Items.FishingRod.name").replace("&", "§");
@@ -38,6 +41,7 @@ public class Config {
         rodMode = config.getString("Items.FishingRod.mode").replace("&", "§");
         rodItemChance = config.getString("Items.FishingRod.itemChance").replace("&", "§");
         rodCreatureChance = config.getString("Items.FishingRod.creatureChance").replace("&", "§");
+        rodDoubleChance = config.getString("Items.FishingRod.doubleChance").replace("&", "§");
 
         loadRarities();
     }
