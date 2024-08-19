@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -75,6 +76,7 @@ public class PlayerDropItemListeners implements Listener {
         droppedItem.setItemMeta(meta);
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(AcuaticLostWealth.messages.modeChanged
                 .replace("%mode%", newMode)));
+        player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.changeModeSound), 1F, 1F);
         event.setCancelled(true);
     }
 }

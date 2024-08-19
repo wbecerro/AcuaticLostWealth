@@ -23,6 +23,10 @@ Messages:
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
 
+Sounds:
+  doubleDropSound: ENTITY_PLAYER_LEVELUP
+  changeModeSound: BLOCK_LEVER_CLICK
+
 Items:
   FishingRod:
     name: "&e&l≈ Caña de Ebisu ≈"

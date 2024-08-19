@@ -5,6 +5,7 @@ import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.MobExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,6 +47,7 @@ public class PlayerFishListeners implements Listener {
         if(random.nextInt(100) + 1 <= doubleChance) {
             iterations++;
             player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
+            player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
         }
 
         for(int i=0;i<iterations;i++) {

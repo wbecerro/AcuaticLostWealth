@@ -18,6 +18,9 @@ public class Config {
     public String itemMode;
     public String creatureMode;
 
+    public String doubleDropSound;
+    public String changeModeSound;
+
     public String rodName;
     public List<String> rodLore = new ArrayList<>();
     public String rodMode;
@@ -36,6 +39,8 @@ public class Config {
         baseDoubleDropChance = config.getInt("Config.baseDoubleDropChance");
         itemMode = config.getString("Config.itemMode").replace("&", "§");
         creatureMode = config.getString("Config.creatureMode").replace("&", "§");
+        doubleDropSound = config.getString("Sounds.doubleDropSound");
+        changeModeSound = config.getString("Sounds.changeModeSound");
         rodName = config.getString("Items.FishingRod.name").replace("&", "§");
         rodLore = config.getStringList("Items.FishingRod.lore");
         rodMode = config.getString("Items.FishingRod.mode").replace("&", "§");
