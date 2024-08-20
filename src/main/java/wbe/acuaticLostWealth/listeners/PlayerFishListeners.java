@@ -30,6 +30,16 @@ public class PlayerFishListeners implements Listener {
         this.utilites = new Utilites(plugin);
     }
 
+    @EventHandler(priority = EventPriority.HIGH)
+    public void playSoundOnBite(PlayerFishEvent event) {
+        if(!event.getState().equals(PlayerFishEvent.State.BITE)) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.fishCaughtSound), 1F, 1F);
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void getRewardOnFish(PlayerFishEvent event) {
 

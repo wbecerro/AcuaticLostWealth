@@ -245,6 +245,50 @@ public class Utilites {
         item.setItemMeta(meta);
     }
 
+    public void addItemChance(ItemStack item, int chance) {
+        NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseItemChance");
+        String loreLine = AcuaticLostWealth.config.rodItemChance
+                .replace("%item_chance%", String.valueOf(chance));
+        ItemMeta meta = item.getItemMeta();
+
+        if(meta == null) {
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
+        }
+
+        List<String> lore = new ArrayList<>();
+        if(meta.hasLore()) {
+            lore = meta.getLore();
+        }
+
+        lore.add(loreLine);
+        meta.setLore(lore);
+
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        item.setItemMeta(meta);
+    }
+
+    public void addCreatureChance(ItemStack item, int chance) {
+        NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseCreatureChance");
+        String loreLine = AcuaticLostWealth.config.rodCreatureChance
+                .replace("%creature_chance%", String.valueOf(chance));
+        ItemMeta meta = item.getItemMeta();
+
+        if(meta == null) {
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
+        }
+
+        List<String> lore = new ArrayList<>();
+        if(meta.hasLore()) {
+            lore = meta.getLore();
+        }
+
+        lore.add(loreLine);
+        meta.setLore(lore);
+
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        item.setItemMeta(meta);
+    }
+
     private int findLine(ItemStack item, String line) {
         List<String> lore = item.getItemMeta().getLore();
         int size = lore.size();

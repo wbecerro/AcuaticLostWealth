@@ -20,6 +20,7 @@ public class Config {
 
     public String doubleDropSound;
     public String changeModeSound;
+    public String fishCaughtSound;
 
     public String rodName;
     public List<String> rodLore = new ArrayList<>();
@@ -41,6 +42,7 @@ public class Config {
         creatureMode = config.getString("Config.creatureMode").replace("&", "§");
         doubleDropSound = config.getString("Sounds.doubleDropSound");
         changeModeSound = config.getString("Sounds.changeModeSound");
+        fishCaughtSound = config.getString("Sounds.fishCaughtSound");
         rodName = config.getString("Items.FishingRod.name").replace("&", "§");
         rodLore = config.getStringList("Items.FishingRod.lore");
         rodMode = config.getString("Items.FishingRod.mode").replace("&", "§");

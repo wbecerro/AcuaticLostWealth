@@ -86,6 +86,34 @@ public class CommandListener implements CommandExecutor {
 
                 utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.doubleDropAdded);
+            } else if(args[0].equalsIgnoreCase("itemChance")) {
+                if(!sender.hasPermission("acuaticlistwealth.command.itemChance")) {
+                    sender.sendMessage(AcuaticLostWealth.messages.noPermission);
+                    return false;
+                }
+
+                if(args.length < 2) {
+                    sender.sendMessage(AcuaticLostWealth.messages.notEnoughArgs);
+                    sender.sendMessage(AcuaticLostWealth.messages.itemChanceArguments);
+                    return false;
+                }
+
+                utilities.addItemChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                sender.sendMessage(AcuaticLostWealth.messages.itemChanceAdded);
+            } else if(args[0].equalsIgnoreCase("creatureChance")) {
+                if(!sender.hasPermission("acuaticlistwealth.command.creatureChance")) {
+                    sender.sendMessage(AcuaticLostWealth.messages.noPermission);
+                    return false;
+                }
+
+                if(args.length < 2) {
+                    sender.sendMessage(AcuaticLostWealth.messages.notEnoughArgs);
+                    sender.sendMessage(AcuaticLostWealth.messages.creatureChanceArguments);
+                    return false;
+                }
+
+                utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                sender.sendMessage(AcuaticLostWealth.messages.creatureChanceAdded);
             }
         }
         return true;

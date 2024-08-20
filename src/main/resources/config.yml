@@ -14,11 +14,17 @@ Messages:
   doubleDropAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de doble recompensa al objeto."
   doubleDropArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth double <Probabilidad>."
   doubleDrop: "&b[&cPesca&b] &eHas encontrado dos recompensas a la vez."
+  itemChanceAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de objetos al objeto."
+  itemChanceArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth itemChance <Probabilidad>."
+  creatureChanceAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de criaturas al objeto."
+  creatureChanceArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth creatureChance <Probabilidad>."
   reload: "&b[&cPesca&b] &eEl plugin se ha recargado con éxito."
   help:
     - "&b/alw &eMuestra esta página."
     - "&b/alw rod <Prob. objeto> <Prob. criatura> <Prob. objeto alt.> <Prob. criatura alt.> [jugador] &eDa una &lCaña de Ebisu."
     - "&b/alw double <Probabilidad> &eAñade probabilidad de doble recompensa al objeto."
+    - "&b/alw itemChance <Probabilidad> &eAñade probabilidad de objetos al objeto."
+    - "&b/alw creatureChance <Probabilidad> &eAñade probabilidad de criaturas al objeto."
     - "&b/alw reload &eRecarga la configuración del plugin."
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
@@ -26,6 +32,7 @@ Messages:
 Sounds:
   doubleDropSound: ENTITY_PLAYER_LEVELUP
   changeModeSound: BLOCK_LEVER_CLICK
+  fishCaughtSound: BLOCK_BELL_USE
 
 Items:
   FishingRod:
