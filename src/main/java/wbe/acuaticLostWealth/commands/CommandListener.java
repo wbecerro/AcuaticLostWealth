@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.items.FishingRod;
-import wbe.acuaticLostWealth.util.Utilites;
+import wbe.acuaticLostWealth.util.Utilities;
 
 public class CommandListener implements CommandExecutor {
 
@@ -17,12 +17,12 @@ public class CommandListener implements CommandExecutor {
 
     private FileConfiguration config;
 
-    private Utilites utilities;
+    private Utilities utilities;
 
     public CommandListener(AcuaticLostWealth plugin) {
         this.plugin = plugin;
         this.config = this.plugin.getConfig();
-        this.utilities = new Utilites(plugin);
+        this.utilities = new Utilities(plugin);
     }
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("AcuaticLostWealth")) {

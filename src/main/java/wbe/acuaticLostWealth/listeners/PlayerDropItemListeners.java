@@ -14,17 +14,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
-import wbe.acuaticLostWealth.util.Utilites;
+import wbe.acuaticLostWealth.util.Utilities;
 
 public class PlayerDropItemListeners implements Listener {
 
     private AcuaticLostWealth plugin;
 
-    private Utilites utilites;
+    private Utilities utilities;
 
     public PlayerDropItemListeners(AcuaticLostWealth plugin) {
         this.plugin = plugin;
-        this.utilites = new Utilites(plugin);
+        this.utilities = new Utilities(plugin);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -70,7 +70,7 @@ public class PlayerDropItemListeners implements Listener {
             mode = 2;
         }
 
-        utilites.changeRodMode(droppedItem, itemChance, creatureChance, newMode);
+        utilities.changeRodMode(droppedItem, itemChance, creatureChance, newMode);
         meta = droppedItem.getItemMeta();
         meta.getPersistentDataContainer().set(modeKey, PersistentDataType.INTEGER, mode);
         droppedItem.setItemMeta(meta);

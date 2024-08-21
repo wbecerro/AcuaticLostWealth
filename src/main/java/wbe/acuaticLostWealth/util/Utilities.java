@@ -9,8 +9,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
-import wbe.acuaticLostWealth.config.Config;
-import wbe.acuaticLostWealth.items.FishingRod;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
 
@@ -18,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Utilites {
+public class Utilities {
 
     AcuaticLostWealth plugin;
 
-    public Utilites(AcuaticLostWealth plugin) {
+    public Utilities(AcuaticLostWealth plugin) {
         this.plugin = plugin;
     }
 

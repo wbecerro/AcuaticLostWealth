@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
-import wbe.acuaticLostWealth.util.Utilites;
+import wbe.acuaticLostWealth.util.Utilities;
 
 import java.util.Random;
 
@@ -23,11 +23,11 @@ public class PlayerFishListeners implements Listener {
 
     private AcuaticLostWealth plugin;
 
-    private Utilites utilites;
+    private Utilities utilities;
 
     public PlayerFishListeners(AcuaticLostWealth plugin) {
         this.plugin = plugin;
-        this.utilites = new Utilites(plugin);
+        this.utilities = new Utilities(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -49,9 +49,9 @@ public class PlayerFishListeners implements Listener {
 
         Random random = new Random();
         Player player = event.getPlayer();
-        int creatureChance = utilites.getPlayerCreatureChance(player);
-        int itemChance = utilites.getPlayerItemChance(player);
-        int doubleChance = utilites.getPlayerDoubleChance(player);
+        int creatureChance = utilities.getPlayerCreatureChance(player);
+        int itemChance = utilities.getPlayerItemChance(player);
+        int doubleChance = utilities.getPlayerDoubleChance(player);
 
         int iterations = 1;
         if(random.nextInt(100) + 1 <= doubleChance) {
@@ -75,8 +75,8 @@ public class PlayerFishListeners implements Listener {
     }
 
     private void spawnCreature(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilites.calculateRarity();
-        String mob = utilites.getRandomCreature(rarity);
+        FishingRarity rarity = utilities.calculateRarity();
+        String mob = utilities.getRandomCreature(rarity);
         Location location = event.getHook().getLocation().add(0, 1, 0);
         MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
         MythicMob mythicMob = mobExecutor.getMythicMob(mob).get();
@@ -89,8 +89,8 @@ public class PlayerFishListeners implements Listener {
     }
 
     private void giveReward(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilites.calculateRarity();
-        Reward reward = utilites.getRandomReward(rarity);
+        FishingRarity rarity = utilities.calculateRarity();
+        Reward reward = utilities.getRandomReward(rarity);
         String command = reward.getCommand().replace("%player%", player.getName());
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         String message = rarity.getPrefix() + reward.getSuffix();
