@@ -1,17 +1,21 @@
 package wbe.acuaticLostWealth;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import wbe.acuaticLostWealth.commands.CommandListener;
 import wbe.acuaticLostWealth.config.Config;
 import wbe.acuaticLostWealth.config.Messages;
 import wbe.acuaticLostWealth.listeners.EventListeners;
+import wbe.acuaticLostWealth.papi.PapiExtension;
 
 import java.io.File;
 
 public final class AcuaticLostWealth extends JavaPlugin {
 
     private FileConfiguration configuration;
+
+    private PapiExtension papiExtension;
 
     private final CommandListener commandListener = new CommandListener(this);
 
@@ -23,6 +27,10 @@ public final class AcuaticLostWealth extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            papiExtension = new PapiExtension(this);
+            papiExtension.register();
+        }
         saveDefaultConfig();
         getLogger().info("AcuaticLostWealth enabled correctly");
         reloadConfiguration();

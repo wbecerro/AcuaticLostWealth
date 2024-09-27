@@ -3,7 +3,7 @@ version: 1.1
 main: wbe.acuaticLostWealth.AcuaticLostWealth
 api-version: 1.21
 author: wbe
-depend: [MythicMobs]
+depend: [MythicMobs, PlaceholderAPI]
 commands:
   AcuaticLostWealth:
     description: AcuaticLostWealth main command
