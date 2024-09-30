@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
+import wbe.acuaticLostWealth.events.PlayerReceiveRewardEvent;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
 import wbe.acuaticLostWealth.util.Utilities;
@@ -95,6 +96,7 @@ public class PlayerFishListeners implements Listener {
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         String message = rarity.getPrefix() + reward.getSuffix();
         player.sendMessage(message);
+        plugin.getServer().getPluginManager().callEvent(new PlayerReceiveRewardEvent(player, rarity, reward));
         if(event.getCaught() instanceof Item) {
             event.getCaught().remove();
         }
