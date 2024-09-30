@@ -62,7 +62,7 @@ public class Config {
             List<String> creatures = config.getStringList("Rarities." + rarity + ".creatures");
             String creatureSpawn = config.getString("Rarities." + rarity + ".creatureSpawn").replace("&", "§");
             List<Reward> rewards = getRewards(rarity);
-            rarities.add(new FishingRarity(prefix, weight, creatures, creatureSpawn, rewards));
+            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, rewards));
         }
     }
 

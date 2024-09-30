@@ -6,7 +6,7 @@
 
     <groupId>wbe</groupId>
     <artifactId>AcuaticLostWealth</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>AcuaticLostWealth</name>
