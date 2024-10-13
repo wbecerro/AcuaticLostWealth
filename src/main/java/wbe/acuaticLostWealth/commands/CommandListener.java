@@ -51,17 +51,26 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                int baseItemChance = Integer.valueOf(args[1]);
-                int baseCreatureChance = Integer.valueOf(args[2]);
-                int alteredItemChance = Integer.valueOf(args[3]);
-                int alteredCreatureChance = Integer.valueOf(args[4]);
+                int baseItemChance = Integer.parseInt(args[1]);
+                int baseCreatureChance = Integer.parseInt(args[2]);
+                int alteredItemChance = Integer.parseInt(args[3]);
+                int alteredCreatureChance = Integer.parseInt(args[4]);
                 FishingRod fishingRod = new FishingRod(plugin, baseItemChance, baseCreatureChance,
                         alteredItemChance, alteredCreatureChance);
                 if(args.length > 5) {
-                    Bukkit.getPlayer(args[5]).getInventory().addItem(new ItemStack[]{fishingRod});
-                    Bukkit.getPlayer(args[5]).sendMessage(AcuaticLostWealth.messages.rodGiven);
+                    player = Bukkit.getPlayer(args[5]);
+                    if(player.getInventory().firstEmpty() == -1) {
+                        player.getWorld().dropItem(player.getLocation(), fishingRod);
+                    } else {
+                        player.getInventory().addItem(fishingRod);
+                    }
+                    player.sendMessage(AcuaticLostWealth.messages.rodGiven);
                 } else {
-                    player.getInventory().addItem(new ItemStack[]{fishingRod});
+                    if(player.getInventory().firstEmpty() == -1) {
+                        player.getWorld().dropItem(player.getLocation(), fishingRod);
+                    } else {
+                        player.getInventory().addItem(fishingRod);
+                    }
                     player.sendMessage(AcuaticLostWealth.messages.rodGiven);
                 }
             } else if(args[0].equalsIgnoreCase("reload")) {
@@ -84,7 +93,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.doubleDropAdded);
             } else if(args[0].equalsIgnoreCase("itemChance")) {
                 if(!sender.hasPermission("acuaticlistwealth.command.itemChance")) {
@@ -98,7 +107,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addItemChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                utilities.addItemChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.itemChanceAdded);
             } else if(args[0].equalsIgnoreCase("creatureChance")) {
                 if(!sender.hasPermission("acuaticlistwealth.command.creatureChance")) {
@@ -112,7 +121,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Integer.valueOf(args[1]));
+                utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.creatureChanceAdded);
             }
         }
