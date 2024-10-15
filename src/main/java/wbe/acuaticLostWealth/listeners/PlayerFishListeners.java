@@ -54,23 +54,22 @@ public class PlayerFishListeners implements Listener {
         int itemChance = utilities.getPlayerItemChance(player);
         int doubleChance = utilities.getPlayerDoubleChance(player);
 
-        int iterations = 1;
-        if(random.nextInt(100) + 1 <= doubleChance) {
-            iterations++;
-            player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
-            player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
+        if(random.nextInt(100) + 1 <= creatureChance) {
+            spawnCreature(event, player);
+            if(random.nextInt(100) + 1 <= doubleChance) {
+                player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
+                player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
+                spawnCreature(event, player);
+            }
         }
 
-        for(int i=0;i<iterations;i++) {
-            if(random.nextInt(100) + 1 <= creatureChance) {
-                spawnCreature(event, player);
-                continue;
-            }
 
-
-            if(random.nextInt(100 ) + 1 <= itemChance) {
+        if(random.nextInt(100 ) + 1 <= itemChance) {
+            giveReward(event, player);
+            if(random.nextInt(100) + 1 <= doubleChance) {
+                player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
+                player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
                 giveReward(event, player);
-                continue;
             }
         }
     }
