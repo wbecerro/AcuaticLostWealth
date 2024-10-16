@@ -62,7 +62,19 @@ public class Config {
             List<String> creatures = config.getStringList("Rarities." + rarity + ".creatures");
             String creatureSpawn = config.getString("Rarities." + rarity + ".creatureSpawn").replace("&", "§");
             List<Reward> rewards = getRewards(rarity);
-            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, rewards));
+            String broadcast = "";
+            if(config.contains("Rarities." + rarity + ".broadcast")) {
+                broadcast = config.getString("Rarities." + rarity + ".broadcast").replace("&", "§");
+            }
+            String title = "";
+            if(config.contains("Rarities." + rarity + ".title")) {
+                title = config.getString("Rarities." + rarity + ".title").replace("&", "§");
+            }
+            int fireworks = -1;
+            if(config.contains("Rarities." + rarity + ".fireworks")) {
+                fireworks = config.getInt("Rarities." + rarity + ".fireworks");
+            }
+            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, rewards, broadcast, title, fireworks));
         }
     }
 

@@ -19,7 +19,14 @@ public class FishingRarity {
 
     private int rewardsSize;
 
-    public FishingRarity(String internalName, String prefix, int weight, List<String> creatures, String creatureSpawn, List<Reward> rewards) {
+    private String broadcast;
+
+    private String title;
+
+    private int fireworks;
+
+    public FishingRarity(String internalName, String prefix, int weight, List<String> creatures, String creatureSpawn, List<Reward> rewards,
+                         String broadcast, String title, int fireworks) {
         this.internalName = internalName;
         this.prefix = prefix;
         this.weight = weight;
@@ -27,6 +34,9 @@ public class FishingRarity {
         this.creatureSpawn = creatureSpawn;
         this.rewards = rewards;
         this.rewardsSize = rewards.size();
+        this.broadcast = broadcast;
+        this.title = title;
+        this.fireworks = fireworks;
     }
 
     public String getInternalName() {
@@ -75,6 +85,30 @@ public class FishingRarity {
 
     public void setRewards(List<Reward> rewards) {
         this.rewards = rewards;
+    }
+
+    public String getBroadcast() {
+        return broadcast;
+    }
+
+    public void setBroadcast(String broadcast) {
+        this.broadcast = broadcast;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getFireworks() {
+        return fireworks;
+    }
+
+    public void setFireworks(int fireworks) {
+        this.fireworks = fireworks;
     }
 
     public Reward getRandomReward() {

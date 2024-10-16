@@ -6,6 +6,8 @@ import io.lumine.mythic.core.mobs.MobExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,6 +94,21 @@ public class PlayerFishListeners implements Listener {
         FishingRarity rarity = utilities.calculateRarity();
         Reward reward = utilities.getRandomReward(rarity);
         String command = reward.getCommand().replace("%player%", player.getName());
+        if(!rarity.getBroadcast().isEmpty()) {
+            Bukkit.getServer().broadcastMessage(rarity.getBroadcast().replace("%player%", player.getName()));
+        }
+
+        if(!rarity.getTitle().isEmpty()) {
+            player.sendTitle(rarity.getTitle(), "", 10, 70, 20);
+        }
+
+        if(rarity.getFireworks() != -1) {
+            for(int i=0;i<rarity.getFireworks();i++) {
+                Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK_ROCKET);
+                firework.setFireworkMeta(utilities.getRandomFirework(firework));
+            }
+        }
+
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
         String message = rarity.getPrefix() + reward.getSuffix();
         player.sendMessage(message);
