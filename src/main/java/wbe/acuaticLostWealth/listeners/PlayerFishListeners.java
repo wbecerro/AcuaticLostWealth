@@ -63,6 +63,7 @@ public class PlayerFishListeners implements Listener {
                 player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
                 spawnCreature(event, player);
             }
+            return;
         }
 
 
@@ -73,6 +74,7 @@ public class PlayerFishListeners implements Listener {
                 player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
                 giveReward(event, player);
             }
+            return;
         }
     }
 
@@ -83,7 +85,7 @@ public class PlayerFishListeners implements Listener {
         MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
         MythicMob mythicMob = mobExecutor.getMythicMob(mob).get();
         mobExecutor.spawnMob(mob, location);
-        String message = rarity.getPrefix() + rarity.getCreatureSpawn().replace("%creature%", mythicMob.getDisplayName().get());
+        String message = rarity.getCreatureSpawn().replace("%creature%", mythicMob.getDisplayName().get());
         player.sendMessage(message);
         if(event.getCaught() instanceof Item) {
             event.getCaught().remove();
