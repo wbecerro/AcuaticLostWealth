@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import wbe.acuaticLostWealth.commands.CommandListener;
+import wbe.acuaticLostWealth.commands.TabListener;
 import wbe.acuaticLostWealth.config.Config;
 import wbe.acuaticLostWealth.config.Messages;
 import wbe.acuaticLostWealth.listeners.EventListeners;
@@ -18,6 +19,8 @@ public final class AcuaticLostWealth extends JavaPlugin {
     private PapiExtension papiExtension;
 
     private final CommandListener commandListener = new CommandListener(this);
+
+    private final TabListener tabListener = new TabListener();
 
     private final EventListeners eventListeners = new EventListeners(this);
 
@@ -37,6 +40,7 @@ public final class AcuaticLostWealth extends JavaPlugin {
         config = new Config(configuration);
 
         getCommand("acuaticlostwealth").setExecutor(this.commandListener);
+        getCommand("acuaticlostwealth").setTabCompleter(this.tabListener);
         this.eventListeners.initializeListeners();
     }
 
