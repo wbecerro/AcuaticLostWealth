@@ -1,5 +1,6 @@
 package wbe.acuaticLostWealth.listeners;
 
+import com.gmail.nossr50.util.player.UserManager;
 import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.MobExecutor;
@@ -57,13 +58,14 @@ public class PlayerFishListeners implements Listener {
         int doubleChance = utilities.getPlayerDoubleChance(player);
 
         if(random.nextInt(100) + 1 <= creatureChance) {
-            spawnCreature(event, player);
-            if(random.nextInt(100) + 1 <= doubleChance) {
-                player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
-                player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
-                spawnCreature(event, player);
+            if(spawnCreature(event, player)) {
+                if(random.nextInt(100) + 1 <= doubleChance) {
+                    player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
+                    player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
+                    spawnCreature(event, player);
+                }
+                return;
             }
-            return;
         }
 
 
@@ -78,8 +80,16 @@ public class PlayerFishListeners implements Listener {
         }
     }
 
-    private void spawnCreature(PlayerFishEvent event, Player player) {
+    private boolean spawnCreature(PlayerFishEvent event, Player player) {
         FishingRarity rarity = utilities.calculateRarity();
+        if(UserManager.getPlayer(player).getSkillLevel(rarity.getSkill()) < rarity.getSkillLevel()) {
+            return false;
+        }
+
+        if(!player.hasPermission("acuaticlostwealth.creatures." + rarity.getInternalName())) {
+            return false;
+        }
+
         String mob = utilities.getRandomCreature(rarity);
         Location location = event.getHook().getLocation().add(0, 1, 0);
         MobExecutor mobExecutor = MythicBukkit.inst().getMobManager();
@@ -90,6 +100,7 @@ public class PlayerFishListeners implements Listener {
         if(event.getCaught() instanceof Item) {
             event.getCaught().remove();
         }
+        return true;
     }
 
     private void giveReward(PlayerFishEvent event, Player player) {

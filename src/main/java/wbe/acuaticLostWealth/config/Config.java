@@ -1,5 +1,6 @@
 package wbe.acuaticLostWealth.config;
 
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import org.bukkit.configuration.file.FileConfiguration;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
@@ -61,6 +62,8 @@ public class Config {
             totalRarityWeight += weight;
             List<String> creatures = config.getStringList("Rarities." + rarity + ".creatures");
             String creatureSpawn = config.getString("Rarities." + rarity + ".creatureSpawn").replace("&", "§");
+            PrimarySkillType skill = PrimarySkillType.valueOf(config.getString("Rarities." + rarity + ".mcmmoSkill").toUpperCase());
+            int level = config.getInt("Rarities." + rarity + ".mcmmoLevel");
             List<Reward> rewards = getRewards(rarity);
             String broadcast = "";
             if(config.contains("Rarities." + rarity + ".broadcast")) {
@@ -74,7 +77,7 @@ public class Config {
             if(config.contains("Rarities." + rarity + ".fireworks")) {
                 fireworks = config.getInt("Rarities." + rarity + ".fireworks");
             }
-            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, rewards, broadcast, title, fireworks));
+            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, skill, level, rewards, broadcast, title, fireworks));
         }
     }
 

@@ -48,10 +48,13 @@ Items:
     creatureChance: "&7Probabilidad de criaturas: &d%creature_chance%%"
     doubleChance: "&7Probabilidad de doble: &d%double_chance%%"
 
+# Para desbloquear una criatura hará falta tener el permiso de ese tier acuaticlostwealth.creatures.tier Ej: acuaticlostwealth.creatures.common
 Rarities:
   common:
     prefix: "&f◆ COMMON ◆ "
     weight: 50
+    mcmmoSkill: fishing
+    mcmmoLevel: 0
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."
@@ -62,6 +65,8 @@ Rarities:
   uncommon:
     prefix: "&a◆ UNCOMMON ◆ "
     weight: 30
+    mcmmoSkill: fishing
+    mcmmoLevel: 0
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."
@@ -72,6 +77,8 @@ Rarities:
   rare:
     prefix: "&9◆ RARE ◆ "
     weight: 10
+    mcmmoSkill: fishing
+    mcmmoLevel: 200
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."
@@ -82,6 +89,8 @@ Rarities:
   epic:
     prefix: "&5◆ EPIC ◆ "
     weight: 6
+    mcmmoSkill: fishing
+    mcmmoLevel: 350
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."
@@ -92,6 +101,8 @@ Rarities:
   legendary:
     prefix: "&6◆ LEGENDARY ◆ "
     weight: 3
+    mcmmoSkill: fishing
+    mcmmoLevel: 500
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."
@@ -102,6 +113,8 @@ Rarities:
   mythic:
     prefix: "&d◆ MYTHIC ◆ "
     weight: 1
+    mcmmoSkill: fishing
+    mcmmoLevel: 650
     creatures:
       - SkeletonKing
     creatureSpawn: "&fA %creature% &fhas spawned."

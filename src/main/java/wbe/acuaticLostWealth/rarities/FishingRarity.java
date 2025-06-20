@@ -1,5 +1,7 @@
 package wbe.acuaticLostWealth.rarities;
 
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
+
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +17,10 @@ public class FishingRarity {
 
     private String creatureSpawn;
 
+    private PrimarySkillType skill;
+
+    private int skillLevel;
+
     private List<Reward> rewards;
 
     private int rewardsSize;
@@ -25,13 +31,15 @@ public class FishingRarity {
 
     private int fireworks;
 
-    public FishingRarity(String internalName, String prefix, int weight, List<String> creatures, String creatureSpawn, List<Reward> rewards,
-                         String broadcast, String title, int fireworks) {
+    public FishingRarity(String internalName, String prefix, int weight, List<String> creatures, String creatureSpawn,
+                         PrimarySkillType skill, int skillLevel, List<Reward> rewards, String broadcast, String title, int fireworks) {
         this.internalName = internalName;
         this.prefix = prefix;
         this.weight = weight;
         this.creatures = creatures;
         this.creatureSpawn = creatureSpawn;
+        this.skill = skill;
+        this.skillLevel = skillLevel;
         this.rewards = rewards;
         this.rewardsSize = rewards.size();
         this.broadcast = broadcast;
@@ -77,6 +85,22 @@ public class FishingRarity {
 
     public void setCreatureSpawn(String creatureSpawn) {
         this.creatureSpawn = creatureSpawn;
+    }
+
+    public PrimarySkillType getSkill() {
+        return skill;
+    }
+
+    public void setSkill(PrimarySkillType skill) {
+        this.skill = skill;
+    }
+
+    public int getSkillLevel() {
+        return skillLevel;
+    }
+
+    public void setSkillLevel(int skillLevel) {
+        this.skillLevel = skillLevel;
     }
 
     public List<Reward> getRewards() {

@@ -4,7 +4,7 @@ main: wbe.acuaticLostWealth.AcuaticLostWealth
 api-version: 1.21
 author: wbe
 softdepend: [PlaceholderAPI]
-depend: [MythicMobs]
+depend: [MythicMobs, mcMMO]
 commands:
   AcuaticLostWealth:
     description: AcuaticLostWealth main command
