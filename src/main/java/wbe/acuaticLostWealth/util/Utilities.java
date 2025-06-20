@@ -193,10 +193,57 @@ public class Utilities {
         return 0;
     }
 
+    public double getPlayerBoostedChance(FishingRarity rarity, Player player) {
+        double chance = 0;
+
+        PlayerInventory inventory = player.getInventory();
+        ItemStack mainHand = inventory.getItemInMainHand();
+        ItemStack offHand = inventory.getItemInOffHand();
+        ItemStack[] armor = inventory.getArmorContents();
+
+        if(!mainHand.getType().equals(Material.AIR)) {
+            chance += getItemBoostedChance(rarity, mainHand);
+        }
+
+        if(!offHand.getType().equals(Material.AIR)) {
+            chance += getItemBoostedChance(rarity, offHand);
+        }
+
+        for(ItemStack item : armor) {
+            if(item == null) {
+                continue;
+            }
+            chance += getItemBoostedChance(rarity, item);
+        }
+
+        return chance;
+    }
+
+    private double getItemBoostedChance(FishingRarity rarity, ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if(meta == null) {
+            return 0;
+        }
+
+        NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
+        if(meta.getPersistentDataContainer().has(rarityKey)) {
+            if(!meta.getPersistentDataContainer().get(rarityKey, PersistentDataType.STRING).equalsIgnoreCase(rarity.getInternalName())) {
+                return 0;
+            }
+        }
+
+        NamespacedKey percentKey = new NamespacedKey(plugin, "boostRarityPercent");
+        if(meta.getPersistentDataContainer().has(percentKey)) {
+            return meta.getPersistentDataContainer().get(percentKey, PersistentDataType.DOUBLE);
+        }
+
+        return 0;
+    }
+
     public FishingRarity calculateRarity() {
         Random random = new Random();
-        int randomNumber = random.nextInt(AcuaticLostWealth.config.totalRarityWeight);
-        int weight = 0;
+        double randomNumber = random.nextDouble(AcuaticLostWealth.config.totalRarityWeight);
+        double weight = 0;
         List<FishingRarity> rarities = AcuaticLostWealth.config.rarities;
 
         for(FishingRarity rarity : rarities) {
@@ -207,6 +254,37 @@ public class Utilities {
         }
 
         return rarities.get(rarities.size() - 1);
+    }
+
+    public FishingRarity calculateRarityWithBoost(FishingRarity boostedRarity, double percent) {
+        double boostedAmount = getBoostedAmount(boostedRarity, percent);
+        Random random = new Random();
+        double randomNumber = random.nextDouble(AcuaticLostWealth.config.totalRarityWeight + boostedAmount);
+        double weight = 0;
+        List<FishingRarity> rarities = AcuaticLostWealth.config.rarities;
+
+        for(FishingRarity rarity : rarities) {
+            if(rarity.getInternalName().equalsIgnoreCase(boostedRarity.getInternalName())) {
+                weight += boostedAmount;
+            }
+            weight += rarity.getWeight();
+            if(randomNumber < weight) {
+                return rarity;
+            }
+        }
+
+        return rarities.get(rarities.size() - 1);
+    }
+
+    public FishingRarity getRarity(Player player) {
+        for(FishingRarity configRarity : AcuaticLostWealth.config.rarities) {
+            double boosted = getPlayerBoostedChance(configRarity, player);
+            if(boosted != 0) {
+                return calculateRarityWithBoost(configRarity, boosted);
+            }
+        }
+
+        return calculateRarity();
     }
 
     public String getRandomCreature(FishingRarity rarity) {
@@ -287,6 +365,42 @@ public class Utilities {
         item.setItemMeta(meta);
     }
 
+    public void addBoostRarityChance(ItemStack item, double chance, String rarityName) {
+        NamespacedKey percentKey = new NamespacedKey(plugin, "boostRarityPercent");
+        NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
+        FishingRarity rarity = getRarityByName(rarityName);
+        String loreLine = AcuaticLostWealth.config.boostChance
+                .replace("%boost_chance%", String.valueOf((int) (chance * 100)))
+                .replace("%rarity%", rarity.getName());
+        ItemMeta meta = item.getItemMeta();
+
+        if(meta == null) {
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
+        }
+
+        List<String> lore = new ArrayList<>();
+        if(meta.hasLore()) {
+            lore = meta.getLore();
+        }
+
+        lore.add(loreLine);
+        meta.setLore(lore);
+
+        meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.STRING, rarityName);
+        meta.getPersistentDataContainer().set(percentKey, PersistentDataType.DOUBLE, chance);
+        item.setItemMeta(meta);
+    }
+
+    private FishingRarity getRarityByName(String name) {
+        for(FishingRarity rarity : AcuaticLostWealth.config.rarities) {
+            if(rarity.getInternalName().equalsIgnoreCase(name)) {
+                return rarity;
+            }
+        }
+
+        return null;
+    }
+
     public FireworkMeta getRandomFirework(Firework firework) {
         Random random = new Random();
         FireworkMeta meta = firework.getFireworkMeta();
@@ -300,6 +414,12 @@ public class Utilities {
                 .withFade(Color.fromRGB(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
                 .build());
         return meta;
+    }
+
+    private double getBoostedAmount(FishingRarity boostedRarity, double percent) {
+        double booster = 1 + percent;
+        double newWeight = boostedRarity.getWeight() * booster;
+        return newWeight - boostedRarity.getWeight();
     }
 
     private FireworkEffect.Type getRandomFireworkType() {

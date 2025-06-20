@@ -81,7 +81,7 @@ public class PlayerFishListeners implements Listener {
     }
 
     private boolean spawnCreature(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilities.calculateRarity();
+        FishingRarity rarity = utilities.getRarity(player);
         if(UserManager.getPlayer(player).getSkillLevel(rarity.getSkill()) < rarity.getSkillLevel()) {
             return false;
         }
@@ -104,7 +104,7 @@ public class PlayerFishListeners implements Listener {
     }
 
     private void giveReward(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilities.calculateRarity();
+        FishingRarity rarity = utilities.getRarity(player);
         Reward reward = utilities.getRandomReward(rarity);
         String command = reward.getCommand().replace("%player%", player.getName());
         if(!rarity.getBroadcast().isEmpty()) {

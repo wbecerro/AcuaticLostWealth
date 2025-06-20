@@ -4,9 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.items.FishingRod;
 import wbe.acuaticLostWealth.util.Utilities;
@@ -15,13 +13,10 @@ public class CommandListener implements CommandExecutor {
 
     private AcuaticLostWealth plugin;
 
-    private FileConfiguration config;
-
     private Utilities utilities;
 
     public CommandListener(AcuaticLostWealth plugin) {
         this.plugin = plugin;
-        this.config = this.plugin.getConfig();
         this.utilities = new Utilities(plugin);
     }
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -123,6 +118,22 @@ public class CommandListener implements CommandExecutor {
 
                 utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.creatureChanceAdded);
+            } else if(args[0].equalsIgnoreCase("boostRarity")) {
+                if(!sender.hasPermission("yggdrasilsbark.command.boostRarity")) {
+                    sender.sendMessage(AcuaticLostWealth.messages.noPermission);
+                    return false;
+                }
+
+                if(args.length < 3) {
+                    sender.sendMessage(AcuaticLostWealth.messages.notEnoughArgs);
+                    sender.sendMessage(AcuaticLostWealth.messages.boostRarityArguments);
+                    return false;
+                }
+
+                String rarity = args[1];
+                double percent = Double.parseDouble(args[2]);
+                utilities.addBoostRarityChance(player.getInventory().getItemInMainHand(), percent, rarity);
+                sender.sendMessage(AcuaticLostWealth.messages.boostRarityAdded.replace("%rarity%", rarity));
             }
         }
         return true;

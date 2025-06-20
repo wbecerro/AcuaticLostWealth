@@ -18,6 +18,8 @@ Messages:
   itemChanceArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth itemChance <Probabilidad>."
   creatureChanceAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad de criaturas al objeto."
   creatureChanceArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth creatureChance <Probabilidad>."
+  boostRarityAdded: "&b[&cPesca&b] &eSe ha añadido probabilidad extra de %rarity% al objeto."
+  boostRarityArguments: "&b[&cPesca&b] &eEl uso es /acuaticlostwealth boostRarity <Rareza> <Porcentaje en base 0>."
   reload: "&b[&cPesca&b] &eEl plugin se ha recargado con éxito."
   help:
     - "&b/alw &eMuestra esta página."
@@ -25,6 +27,7 @@ Messages:
     - "&b/alw double <Probabilidad> &eAñade probabilidad de doble recompensa al objeto."
     - "&b/alw itemChance <Probabilidad> &eAñade probabilidad de objetos al objeto."
     - "&b/alw creatureChance <Probabilidad> &eAñade probabilidad de criaturas al objeto."
+    - "&b/alw boostRarity <Rareza> <Porcentaje en base 0> &eAñade probabilidad de encontrar más una rareza."
     - "&b/alw reload &eRecarga la configuración del plugin."
     - "&b"
     - "&eLeyenda: &b<> &eObligatorio  &b[] &eOpcional"
@@ -47,10 +50,12 @@ Items:
     itemChance: "&7Probabilidad de objetos: &d%item_chance%%"
     creatureChance: "&7Probabilidad de criaturas: &d%creature_chance%%"
     doubleChance: "&7Probabilidad de doble: &d%double_chance%%"
+    boostChance: "&7Probabilidad de %rarity%&7: &d%boost_chance%%"
 
 # Para desbloquear una criatura hará falta tener el permiso de ese tier acuaticlostwealth.creatures.tier Ej: acuaticlostwealth.creatures.common
 Rarities:
   common:
+    name: "&fCommon"
     prefix: "&f◆ COMMON ◆ "
     weight: 50
     mcmmoSkill: fishing
@@ -63,6 +68,7 @@ Rarities:
         suffix: "&f1x Golden Apple"
         command: "give %player% golden_apple 1"
   uncommon:
+    name: "&aUncommon"
     prefix: "&a◆ UNCOMMON ◆ "
     weight: 30
     mcmmoSkill: fishing
@@ -75,6 +81,7 @@ Rarities:
         suffix: "&f1x Golden Apple"
         command: "give %player% golden_apple 1"
   rare:
+    name: "&9Rare"
     prefix: "&9◆ RARE ◆ "
     weight: 10
     mcmmoSkill: fishing
@@ -87,6 +94,7 @@ Rarities:
         suffix: "&f1x Golden Apple"
         command: "give %player% golden_apple 1"
   epic:
+    name: "&5Epic"
     prefix: "&5◆ EPIC ◆ "
     weight: 6
     mcmmoSkill: fishing
@@ -99,6 +107,7 @@ Rarities:
         suffix: "&f1x Golden Apple"
         command: "give %player% golden_apple 1"
   legendary:
+    name: "&6Legendary"
     prefix: "&6◆ LEGENDARY ◆ "
     weight: 3
     mcmmoSkill: fishing
@@ -111,6 +120,7 @@ Rarities:
         suffix: "&f1x Golden Apple"
         command: "give %player% golden_apple 1"
   mythic:
+    name: "&dMythic"
     prefix: "&d◆ MYTHIC ◆ "
     weight: 1
     mcmmoSkill: fishing

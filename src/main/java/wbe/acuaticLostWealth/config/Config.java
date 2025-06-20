@@ -29,9 +29,10 @@ public class Config {
     public String rodItemChance;
     public String rodCreatureChance;
     public String rodDoubleChance;
+    public String boostChance;
 
     public List<FishingRarity> rarities = new ArrayList<>();
-    public int totalRarityWeight = 0;
+    public double totalRarityWeight = 0;
 
     public Config(FileConfiguration config) {
         this.config = config;
@@ -50,6 +51,7 @@ public class Config {
         rodItemChance = config.getString("Items.FishingRod.itemChance").replace("&", "§");
         rodCreatureChance = config.getString("Items.FishingRod.creatureChance").replace("&", "§");
         rodDoubleChance = config.getString("Items.FishingRod.doubleChance").replace("&", "§");
+        boostChance = config.getString("Items.FishingRod.boostChance").replace("&", "§");
 
         loadRarities();
     }
@@ -57,8 +59,9 @@ public class Config {
     private void loadRarities() {
         Set<String> configRarities = config.getConfigurationSection("Rarities").getKeys(false);
         for(String rarity : configRarities) {
+            String name = config.getString("Rarities." + rarity + ".name").replace("&", "§");
             String prefix = config.getString("Rarities." + rarity + ".prefix").replace("&", "§");
-            int weight = config.getInt("Rarities." + rarity + ".weight");
+            double weight = config.getDouble("Rarities." + rarity + ".weight");
             totalRarityWeight += weight;
             List<String> creatures = config.getStringList("Rarities." + rarity + ".creatures");
             String creatureSpawn = config.getString("Rarities." + rarity + ".creatureSpawn").replace("&", "§");
@@ -77,7 +80,7 @@ public class Config {
             if(config.contains("Rarities." + rarity + ".fireworks")) {
                 fireworks = config.getInt("Rarities." + rarity + ".fireworks");
             }
-            rarities.add(new FishingRarity(rarity, prefix, weight, creatures, creatureSpawn, skill, level, rewards, broadcast, title, fireworks));
+            rarities.add(new FishingRarity(rarity, name, prefix, weight, creatures, creatureSpawn, skill, level, rewards, broadcast, title, fireworks));
         }
     }
 

@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import wbe.acuaticLostWealth.AcuaticLostWealth;
+import wbe.acuaticLostWealth.rarities.FishingRarity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ import java.util.List;
 public class TabListener implements TabCompleter {
 
     private final List<String> subCommands = Arrays.asList("help", "rod", "double", "itemChance", "creatureChance",
-            "reload");
+            "boostRarity", "reload");
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -41,6 +43,15 @@ public class TabListener implements TabCompleter {
                 case "creaturechance":
                     completions.add("<Probabilidad>");
                     break;
+                case "boostrarity":
+                    for(FishingRarity rarity : AcuaticLostWealth.config.rarities) {
+                        if(args[1].isEmpty()) {
+                            completions.add(rarity.getInternalName());
+                        } else if(rarity.getInternalName().startsWith(args[1])) {
+                            completions.add(rarity.getInternalName());
+                        }
+                    }
+                    break;
             }
         }
 
@@ -49,6 +60,9 @@ public class TabListener implements TabCompleter {
             switch(args[0].toLowerCase()) {
                 case "rod":
                     completions.add("<Probabilidad criatura>");
+                    break;
+                case "boostrarity":
+                    completions.add("<Procentaje en base 0>");
                     break;
             }
         }

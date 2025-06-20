@@ -9,9 +9,11 @@ public class FishingRarity {
 
     private String internalName;
 
+    private String name;
+
     private String prefix;
 
-    private int weight;
+    private double weight;
 
     private List<String> creatures;
 
@@ -31,9 +33,10 @@ public class FishingRarity {
 
     private int fireworks;
 
-    public FishingRarity(String internalName, String prefix, int weight, List<String> creatures, String creatureSpawn,
+    public FishingRarity(String internalName, String name, String prefix, double weight, List<String> creatures, String creatureSpawn,
                          PrimarySkillType skill, int skillLevel, List<Reward> rewards, String broadcast, String title, int fireworks) {
         this.internalName = internalName;
+        this.name = name;
         this.prefix = prefix;
         this.weight = weight;
         this.creatures = creatures;
@@ -55,6 +58,14 @@ public class FishingRarity {
         this.internalName = internalName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPrefix() {
         return prefix;
     }
@@ -63,11 +74,11 @@ public class FishingRarity {
         this.prefix = prefix;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
