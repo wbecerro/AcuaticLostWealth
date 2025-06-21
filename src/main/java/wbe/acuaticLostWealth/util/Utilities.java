@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class Utilities {
 
-    AcuaticLostWealth plugin;
+    private AcuaticLostWealth plugin;
 
     public Utilities(AcuaticLostWealth plugin) {
         this.plugin = plugin;
@@ -163,7 +163,7 @@ public class Utilities {
     }
 
     public double getPlayerDoubleChance(Player player) {
-        double chance = 0;
+        double chance = AcuaticLostWealth.config.baseDoubleDropChance;
 
         PlayerInventory inventory = player.getInventory();
         ItemStack mainHand = inventory.getItemInMainHand();
@@ -336,13 +336,13 @@ public class Utilities {
         NamespacedKey key;
         switch(type) {
             case 0:
-                key = new NamespacedKey(plugin, "itemChance");
+                key = new NamespacedKey(plugin, "baseItemChance");
                 break;
             case 1:
-                key = new NamespacedKey(plugin, "creatureChance");
+                key = new NamespacedKey(plugin, "baseCreatureChance");
                 break;
             case 2:
-                key = new NamespacedKey(plugin, "doubleChance");
+                key = new NamespacedKey(plugin, "baseDoubleChance");
                 break;
             default:
                 key = new NamespacedKey(plugin, "boostRarityPercent");
@@ -377,13 +377,13 @@ public class Utilities {
         NamespacedKey key;
         switch(type) {
             case 0:
-                key = new NamespacedKey(plugin, "itemChance");
+                key = new NamespacedKey(plugin, "baseItemChance");
                 break;
             case 1:
-                key = new NamespacedKey(plugin, "creatureChance");
+                key = new NamespacedKey(plugin, "baseCreatureChance");
                 break;
             case 2:
-                key = new NamespacedKey(plugin, "doubleChance");
+                key = new NamespacedKey(plugin, "baseDoubleChance");
                 break;
             default:
                 key = new NamespacedKey(plugin, "boostRarityPercent");
@@ -396,14 +396,7 @@ public class Utilities {
 
         double playerChance = player.getPersistentDataContainer().get(key, PersistentDataType.DOUBLE);
         playerChance -= chance;
-        if(playerChance <= 0) {
-            player.getPersistentDataContainer().remove(key);
-            if(type > 2) {
-                player.getPersistentDataContainer().remove(new NamespacedKey(plugin, "boostRarity"));
-            }
-        } else {
-            player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, playerChance);
-        }
+        player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, playerChance);
     }
 
     public void addDoubleDropChance(ItemStack item, double chance) {
