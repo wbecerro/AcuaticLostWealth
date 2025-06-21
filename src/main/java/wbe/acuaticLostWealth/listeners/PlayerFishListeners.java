@@ -53,13 +53,13 @@ public class PlayerFishListeners implements Listener {
 
         Random random = new Random();
         Player player = event.getPlayer();
-        int creatureChance = utilities.getPlayerCreatureChance(player);
-        int itemChance = utilities.getPlayerItemChance(player);
-        int doubleChance = utilities.getPlayerDoubleChance(player);
+        double creatureChance = utilities.getPlayerCreatureChance(player);
+        double itemChance = utilities.getPlayerItemChance(player);
+        double doubleChance = utilities.getPlayerDoubleChance(player);
 
-        if(random.nextInt(100) + 1 <= creatureChance) {
+        if(random.nextDouble(100) + 1 <= creatureChance) {
             if(spawnCreature(event, player)) {
-                if(random.nextInt(100) + 1 <= doubleChance) {
+                if(random.nextDouble(100) + 1 <= doubleChance) {
                     player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
                     player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
                     spawnCreature(event, player);
@@ -69,9 +69,9 @@ public class PlayerFishListeners implements Listener {
         }
 
 
-        if(random.nextInt(100 ) + 1 <= itemChance) {
+        if(random.nextDouble(100 ) + 1 <= itemChance) {
             giveReward(event, player);
-            if(random.nextInt(100) + 1 <= doubleChance) {
+            if(random.nextDouble(100) + 1 <= doubleChance) {
                 player.sendMessage(AcuaticLostWealth.messages.doubleDrop);
                 player.playSound(player.getLocation(), Sound.valueOf(AcuaticLostWealth.config.doubleDropSound), 1F, 1F);
                 giveReward(event, player);

@@ -56,16 +56,16 @@ public class PlayerDropItemListeners implements Listener {
 
         int mode = meta.getPersistentDataContainer().get(modeKey, PersistentDataType.INTEGER);
         String newMode = "";
-        int itemChance = 0;
-        int creatureChance = 0;
+        double itemChance = 0;
+        double creatureChance = 0;
         if(mode == 2) {
-            itemChance = meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.INTEGER);
-            creatureChance = meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.INTEGER);
+            itemChance = meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.DOUBLE);
+            creatureChance = meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.DOUBLE);
             newMode = AcuaticLostWealth.config.itemMode;
             mode = 1;
         } else {
-            itemChance = meta.getPersistentDataContainer().get(alteredItemKey, PersistentDataType.INTEGER);
-            creatureChance = meta.getPersistentDataContainer().get(alteredCreatureKey, PersistentDataType.INTEGER);
+            itemChance = meta.getPersistentDataContainer().get(alteredItemKey, PersistentDataType.DOUBLE);
+            creatureChance = meta.getPersistentDataContainer().get(alteredCreatureKey, PersistentDataType.DOUBLE);
             newMode = AcuaticLostWealth.config.creatureMode;
             mode = 2;
         }

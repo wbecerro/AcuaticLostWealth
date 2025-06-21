@@ -46,10 +46,10 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                int baseItemChance = Integer.parseInt(args[1]);
-                int baseCreatureChance = Integer.parseInt(args[2]);
-                int alteredItemChance = Integer.parseInt(args[3]);
-                int alteredCreatureChance = Integer.parseInt(args[4]);
+                double baseItemChance = Integer.parseInt(args[1]);
+                double baseCreatureChance = Integer.parseInt(args[2]);
+                double alteredItemChance = Integer.parseInt(args[3]);
+                double alteredCreatureChance = Integer.parseInt(args[4]);
                 FishingRod fishingRod = new FishingRod(plugin, baseItemChance, baseCreatureChance,
                         alteredItemChance, alteredCreatureChance);
                 if(args.length > 5) {
@@ -88,7 +88,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
+                utilities.addDoubleDropChance(player.getInventory().getItemInMainHand(), Double.parseDouble(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.doubleDropAdded);
             } else if(args[0].equalsIgnoreCase("itemChance")) {
                 if(!sender.hasPermission("acuaticlistwealth.command.itemChance")) {
@@ -102,7 +102,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addItemChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
+                utilities.addItemChance(player.getInventory().getItemInMainHand(), Double.parseDouble(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.itemChanceAdded);
             } else if(args[0].equalsIgnoreCase("creatureChance")) {
                 if(!sender.hasPermission("acuaticlistwealth.command.creatureChance")) {
@@ -116,7 +116,7 @@ public class CommandListener implements CommandExecutor {
                     return false;
                 }
 
-                utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Integer.parseInt(args[1]));
+                utilities.addCreatureChance(player.getInventory().getItemInMainHand(), Double.parseDouble(args[1]));
                 sender.sendMessage(AcuaticLostWealth.messages.creatureChanceAdded);
             } else if(args[0].equalsIgnoreCase("boostRarity")) {
                 if(!sender.hasPermission("yggdrasilsbark.command.boostRarity")) {

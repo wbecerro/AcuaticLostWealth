@@ -14,7 +14,7 @@ public class FishingRod extends ItemStack {
 
     private AcuaticLostWealth plugin;
 
-    public FishingRod(AcuaticLostWealth plugin, int baseItemChance, int baseCreatureChance, int alteredItemChance, int alteredCreatureChance) {
+    public FishingRod(AcuaticLostWealth plugin, double baseItemChance, double baseCreatureChance, double alteredItemChance, double alteredCreatureChance) {
         super(Material.FISHING_ROD);
 
         this.plugin = plugin;
@@ -41,7 +41,7 @@ public class FishingRod extends ItemStack {
         setKeys(baseItemChance, baseCreatureChance, alteredItemChance, alteredCreatureChance);
     }
 
-    private void setKeys(int baseItemChance, int baseCreatureChance, int alteredItemChance, int alteredCreatureChance) {
+    private void setKeys(double baseItemChance, double baseCreatureChance, double alteredItemChance, double alteredCreatureChance) {
         ItemMeta meta = getItemMeta();
         NamespacedKey rodKey = new NamespacedKey(plugin, "ALWFishingRod");
         NamespacedKey modeKey = new NamespacedKey(plugin, "ALWFishingMode");
@@ -52,10 +52,10 @@ public class FishingRod extends ItemStack {
 
         meta.getPersistentDataContainer().set(rodKey, PersistentDataType.BOOLEAN, true);
         meta.getPersistentDataContainer().set(modeKey, PersistentDataType.INTEGER, 1);
-        meta.getPersistentDataContainer().set(baseItemKey, PersistentDataType.INTEGER, baseItemChance);
-        meta.getPersistentDataContainer().set(alteredItemKey, PersistentDataType.INTEGER, alteredItemChance);
-        meta.getPersistentDataContainer().set(baseCreatureKey, PersistentDataType.INTEGER, baseCreatureChance);
-        meta.getPersistentDataContainer().set(alteredCreatureKey, PersistentDataType.INTEGER, alteredCreatureChance);
+        meta.getPersistentDataContainer().set(baseItemKey, PersistentDataType.DOUBLE, baseItemChance);
+        meta.getPersistentDataContainer().set(alteredItemKey, PersistentDataType.DOUBLE, alteredItemChance);
+        meta.getPersistentDataContainer().set(baseCreatureKey, PersistentDataType.DOUBLE, baseCreatureChance);
+        meta.getPersistentDataContainer().set(alteredCreatureKey, PersistentDataType.DOUBLE, alteredCreatureChance);
 
         setItemMeta(meta);
     }

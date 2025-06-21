@@ -24,7 +24,7 @@ public class Utilities {
         this.plugin = plugin;
     }
 
-    public ItemStack changeRodMode(ItemStack rod, int itemChance, int creatureChance, String mode) {
+    public ItemStack changeRodMode(ItemStack rod, double itemChance, double creatureChance, String mode) {
         int modeLine = findLine(rod, AcuaticLostWealth.config.rodMode.split(":")[0]);
         int itemChanceLine = findLine(rod, AcuaticLostWealth.config.rodItemChance.split(":")[0]);
         int creatureChanceLine = findLine(rod, AcuaticLostWealth.config.rodCreatureChance.split(":")[0]);
@@ -44,8 +44,8 @@ public class Utilities {
         return rod;
     }
 
-    public int getPlayerCreatureChance(Player player) {
-        int chance = AcuaticLostWealth.config.baseCreatureChance;
+    public double getPlayerCreatureChance(Player player) {
+        double chance = AcuaticLostWealth.config.baseCreatureChance;
 
         PlayerInventory inventory = player.getInventory();
         ItemStack mainHand = inventory.getItemInMainHand();
@@ -70,7 +70,7 @@ public class Utilities {
         return chance;
     }
 
-    private int getItemCreatureChance(ItemStack item) {
+    private double getItemCreatureChance(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if(meta == null) {
             return 0;
@@ -82,24 +82,24 @@ public class Utilities {
             int mode = meta.getPersistentDataContainer().get(modeKey, PersistentDataType.INTEGER);
             if(mode == 1) {
                 NamespacedKey baseCreatureKey = new NamespacedKey(plugin, "baseCreatureChance");
-                return meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.INTEGER);
+                return meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.DOUBLE);
             } else {
                 NamespacedKey alteredCreatureKey = new NamespacedKey(plugin, "alteredCreatureChance");
-                return meta.getPersistentDataContainer().get(alteredCreatureKey, PersistentDataType.INTEGER);
+                return meta.getPersistentDataContainer().get(alteredCreatureKey, PersistentDataType.DOUBLE);
             }
         }
 
         // Caso general
         NamespacedKey baseCreatureKey = new NamespacedKey(plugin, "baseCreatureChance");
         if(meta.getPersistentDataContainer().has(baseCreatureKey)) {
-            return meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.INTEGER);
+            return meta.getPersistentDataContainer().get(baseCreatureKey, PersistentDataType.DOUBLE);
         }
 
         return 0;
     }
 
-    public int getPlayerItemChance(Player player) {
-        int chance = AcuaticLostWealth.config.baseItemChance;
+    public double getPlayerItemChance(Player player) {
+        double chance = AcuaticLostWealth.config.baseItemChance;
 
         PlayerInventory inventory = player.getInventory();
         ItemStack mainHand = inventory.getItemInMainHand();
@@ -124,7 +124,7 @@ public class Utilities {
         return chance;
     }
 
-    private int getItemItemChance(ItemStack item) {
+    private double getItemItemChance(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if(meta == null) {
             return 0;
@@ -136,24 +136,24 @@ public class Utilities {
             int mode = meta.getPersistentDataContainer().get(modeKey, PersistentDataType.INTEGER);
             if(mode == 1) {
                 NamespacedKey baseItemKey = new NamespacedKey(plugin, "baseItemChance");
-                return meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.INTEGER);
+                return meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.DOUBLE);
             } else {
                 NamespacedKey alteredItemKey = new NamespacedKey(plugin, "alteredItemChance");
-                return meta.getPersistentDataContainer().get(alteredItemKey, PersistentDataType.INTEGER);
+                return meta.getPersistentDataContainer().get(alteredItemKey, PersistentDataType.DOUBLE);
             }
         }
 
         // Caso general
         NamespacedKey baseItemKey = new NamespacedKey(plugin, "baseItemChance");
         if(meta.getPersistentDataContainer().has(baseItemKey)) {
-            return meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.INTEGER);
+            return meta.getPersistentDataContainer().get(baseItemKey, PersistentDataType.DOUBLE);
         }
 
         return 0;
     }
 
-    public int getPlayerDoubleChance(Player player) {
-        int chance = 0;
+    public double getPlayerDoubleChance(Player player) {
+        double chance = 0;
 
         PlayerInventory inventory = player.getInventory();
         ItemStack mainHand = inventory.getItemInMainHand();
@@ -178,7 +178,7 @@ public class Utilities {
         return chance;
     }
 
-    private int getItemDoubleChance(ItemStack item) {
+    private double getItemDoubleChance(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if(meta == null) {
             return 0;
@@ -187,7 +187,7 @@ public class Utilities {
         // Caso general
         NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseDoubleChance");
         if(meta.getPersistentDataContainer().has(baseDoubleKey)) {
-            return meta.getPersistentDataContainer().get(baseDoubleKey, PersistentDataType.INTEGER);
+            return meta.getPersistentDataContainer().get(baseDoubleKey, PersistentDataType.DOUBLE);
         }
 
         return 0;
@@ -299,7 +299,7 @@ public class Utilities {
         return rewards.get(random.nextInt(rewards.size()));
     }
 
-    public void addDoubleDropChance(ItemStack item, int chance) {
+    public void addDoubleDropChance(ItemStack item, double chance) {
         NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseDoubleChance");
         String loreLine = AcuaticLostWealth.config.rodDoubleChance
                 .replace("%double_chance%", String.valueOf(chance));
@@ -317,11 +317,11 @@ public class Utilities {
         lore.add(loreLine);
         meta.setLore(lore);
 
-        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.DOUBLE, chance);
         item.setItemMeta(meta);
     }
 
-    public void addItemChance(ItemStack item, int chance) {
+    public void addItemChance(ItemStack item, double chance) {
         NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseItemChance");
         String loreLine = AcuaticLostWealth.config.rodItemChance
                 .replace("%item_chance%", String.valueOf(chance));
@@ -339,11 +339,11 @@ public class Utilities {
         lore.add(loreLine);
         meta.setLore(lore);
 
-        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.DOUBLE, chance);
         item.setItemMeta(meta);
     }
 
-    public void addCreatureChance(ItemStack item, int chance) {
+    public void addCreatureChance(ItemStack item, double chance) {
         NamespacedKey baseDoubleKey = new NamespacedKey(plugin, "baseCreatureChance");
         String loreLine = AcuaticLostWealth.config.rodCreatureChance
                 .replace("%creature_chance%", String.valueOf(chance));
@@ -361,7 +361,7 @@ public class Utilities {
         lore.add(loreLine);
         meta.setLore(lore);
 
-        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.INTEGER, chance);
+        meta.getPersistentDataContainer().set(baseDoubleKey, PersistentDataType.DOUBLE, chance);
         item.setItemMeta(meta);
     }
 
