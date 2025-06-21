@@ -347,11 +347,22 @@ public class Utilities {
             default:
                 key = new NamespacedKey(plugin, "boostRarityPercent");
                 NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
+                if(player.getPersistentDataContainer().has(rarityKey)) {
+                    if(!player.getPersistentDataContainer().get(rarityKey, PersistentDataType.STRING).equalsIgnoreCase(rarity)) {
+                        player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, 0d);
+                    }
+                }
                 player.getPersistentDataContainer().set(rarityKey, PersistentDataType.STRING, rarity);
                 break;
         }
 
-        player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, chance);
+        if(player.getPersistentDataContainer().has(key)) {
+            double playerChance = player.getPersistentDataContainer().get(key, PersistentDataType.DOUBLE);
+            playerChance += chance;
+            player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, playerChance);
+        } else {
+            player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, chance);
+        }
     }
 
     /**
