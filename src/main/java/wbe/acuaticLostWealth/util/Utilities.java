@@ -522,6 +522,34 @@ public class Utilities {
         return newWeight - boostedRarity.getWeight();
     }
 
+    private FishingRarity getBoostedRarity(Player player) {
+        for(FishingRarity rarity : AcuaticLostWealth.config.rarities) {
+            double boosted = getPlayerBoostedChance(rarity, player);
+            if(boosted != 0) {
+                return rarity;
+            }
+        }
+
+        return null;
+    }
+
+    public String showRarityChance(String rarityName, Player player) {
+        FishingRarity rarity = getRarityByName(rarityName);
+        double totalWeight = AcuaticLostWealth.config.totalRarityWeight;
+        double rarityWeight = rarity.getWeight();
+
+        FishingRarity boostedRarity = getBoostedRarity(player);
+        if(boostedRarity != null && rarity.getInternalName().equalsIgnoreCase(boostedRarity.getInternalName())) {
+            double boostPercent = getPlayerBoostedChance(rarity, player);
+            double boostedAmount = getBoostedAmount(rarity, boostPercent);
+            totalWeight += boostedAmount;
+            rarityWeight += boostedAmount;
+        }
+
+        double finalChance = rarityWeight / totalWeight * 100;
+        return String.format("%.2f", finalChance);
+    }
+
     private FireworkEffect.Type getRandomFireworkType() {
         Random random = new Random();
         return FireworkEffect.Type.values()[random.nextInt(FireworkEffect.Type.values().length)];

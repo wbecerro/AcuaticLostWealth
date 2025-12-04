@@ -3,6 +3,7 @@ package wbe.acuaticLostWealth.papi;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
+import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.util.Utilities;
 
 public class PapiExtension extends PlaceholderExpansion {
@@ -44,6 +45,9 @@ public class PapiExtension extends PlaceholderExpansion {
             return String.valueOf(utilities.getPlayerCreatureChance(player.getPlayer()));
         } else if(params.equalsIgnoreCase("doublechance")) {
             return String.valueOf(utilities.getPlayerDoubleChance(player.getPlayer()));
+        } else if(params.contains("chance")) {
+            String rarityName = params.replace("chance", "");
+            return utilities.showRarityChance(rarityName, player.getPlayer());
         }
 
         return null;
