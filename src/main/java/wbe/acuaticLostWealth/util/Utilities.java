@@ -11,6 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
+import wbe.acuaticLostWealth.rarities.RewardCommand;
 
 import java.util.ArrayList;
 import java.util.List;

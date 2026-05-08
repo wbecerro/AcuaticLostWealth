@@ -19,6 +19,7 @@ import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.events.PlayerReceiveRewardEvent;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
+import wbe.acuaticLostWealth.rarities.RewardCommand;
 import wbe.acuaticLostWealth.util.Utilities;
 
 import java.util.Random;
@@ -106,7 +107,6 @@ public class PlayerFishListeners implements Listener {
     private void giveReward(PlayerFishEvent event, Player player) {
         FishingRarity rarity = utilities.getRarity(player);
         Reward reward = utilities.getRandomReward(rarity);
-        String command = reward.getCommand().replace("%player%", player.getName());
         if(!rarity.getBroadcast().isEmpty()) {
             Bukkit.getServer().broadcastMessage(rarity.getBroadcast().replace("%player%", player.getName()));
         }
@@ -122,12 +122,9 @@ public class PlayerFishListeners implements Listener {
             }
         }
 
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+        reward.giveReward(player, event);
         String message = rarity.getPrefix() + reward.getSuffix();
         player.sendMessage(message);
         plugin.getServer().getPluginManager().callEvent(new PlayerReceiveRewardEvent(player, rarity, reward));
-        if(event.getCaught() instanceof Item) {
-            event.getCaught().remove();
-        }
     }
 }

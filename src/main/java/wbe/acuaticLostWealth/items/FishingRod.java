@@ -20,7 +20,7 @@ public class FishingRod extends ItemStack {
         this.plugin = plugin;
 
         ItemMeta meta;
-        if (hasItemMeta()) {
+        if(hasItemMeta()) {
             meta = getItemMeta();
         } else {
             meta = Bukkit.getItemFactory().getItemMeta(Material.FISHING_ROD);

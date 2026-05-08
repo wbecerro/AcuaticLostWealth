@@ -1,9 +1,15 @@
 package wbe.acuaticLostWealth.config;
 
 import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
+import wbe.acuaticLostWealth.rarities.RewardCommand;
+import wbe.acuaticLostWealth.rarities.RewardItem;
+import wbe.hephaestusForge.HephaestusForge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +95,23 @@ public class Config {
         Set<String> rewards = config.getConfigurationSection("Rarities." + rarity + ".rewards").getKeys(false);
         for(String reward : rewards) {
             String suffix = config.getString("Rarities." + rarity + ".rewards." + reward + ".suffix").replace("&", "§");
-            String command = config.getString("Rarities." + rarity + ".rewards." + reward + ".command");
-            finalRewards.add(new Reward(suffix, command));
+            if(config.contains("Rarities." + rarity + ".rewards." + reward + ".command")) {
+                finalRewards.add(new RewardCommand(suffix, config.getString("Rarities." + rarity + ".rewards." + reward + ".command")));
+            } else if(config.contains("Rarities." + rarity + ".rewards." + reward + ".item")) {
+                String itemName = config.getString("Rarities." + rarity + ".rewards." + reward + ".item");
+                int itemAmount = config.getInt("Rarities." + rarity + ".rewards." + reward + ".amount");
+                ItemStack item;
+                try {
+                    item = new ItemStack(Material.valueOf(itemName));
+                } catch(IllegalArgumentException ex) {
+                    item = HephaestusForge.config.savedItems.get(itemName);
+                }
+
+                if(item != null) {
+                    item.setAmount(itemAmount);
+                    finalRewards.add(new RewardItem(suffix, item));
+                }
+            }
         }
 
         return finalRewards;
