@@ -104,7 +104,7 @@ public class Config {
                 try {
                     item = new ItemStack(Material.valueOf(itemName));
                 } catch(IllegalArgumentException ex) {
-                    item = HephaestusForge.config.savedItems.get(itemName);
+                    item = new ItemStack(HephaestusForge.config.savedItems.get(itemName));
                 }
 
                 if(item != null) {
