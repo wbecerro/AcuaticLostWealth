@@ -40,11 +40,11 @@ public class PapiExtension extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer player, String params) {
         if(params.equalsIgnoreCase("itemchance")) {
-            return String.valueOf(utilities.getPlayerItemChance(player.getPlayer()));
+            return String.format("%.2f", utilities.getPlayerItemChance(player.getPlayer()));
         } else if(params.equalsIgnoreCase("creaturechance")) {
-            return String.valueOf(utilities.getPlayerCreatureChance(player.getPlayer()));
+            return String.format("%.2f", utilities.getPlayerCreatureChance(player.getPlayer()));
         } else if(params.equalsIgnoreCase("doublechance")) {
-            return String.valueOf(utilities.getPlayerDoubleChance(player.getPlayer()));
+            return String.format("%.2f", utilities.getPlayerDoubleChance(player.getPlayer()));
         } else if(params.contains("chance")) {
             String rarityName = params.replace("chance", "");
             return utilities.showRarityChance(rarityName, player.getPlayer());
