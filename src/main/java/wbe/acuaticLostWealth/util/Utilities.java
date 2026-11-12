@@ -11,7 +11,6 @@ import org.bukkit.persistence.PersistentDataType;
 import wbe.acuaticLostWealth.AcuaticLostWealth;
 import wbe.acuaticLostWealth.rarities.FishingRarity;
 import wbe.acuaticLostWealth.rarities.Reward;
-import wbe.acuaticLostWealth.rarities.RewardCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,14 +231,9 @@ public class Utilities {
             chance += getItemBoostedChance(rarity, item);
         }
 
-        NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
-        if(player.getPersistentDataContainer().has(rarityKey)) {
-            if(player.getPersistentDataContainer().get(rarityKey, PersistentDataType.STRING).equalsIgnoreCase(rarity.getInternalName())) {
-                NamespacedKey percentKey = new NamespacedKey(plugin, "boostRarityPercent");
-                if(player.getPersistentDataContainer().has(percentKey)) {
-                    chance += player.getPersistentDataContainer().get(percentKey, PersistentDataType.DOUBLE);
-                }
-            }
+        NamespacedKey boostedKey = new NamespacedKey(plugin, "boostRarity" + rarity.getInternalName());
+        if(player.getPersistentDataContainer().has(boostedKey)) {
+            chance += player.getPersistentDataContainer().get(boostedKey, PersistentDataType.DOUBLE);
         }
 
         return chance;
@@ -251,29 +245,22 @@ public class Utilities {
             return 0;
         }
 
-        NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
-        if(meta.getPersistentDataContainer().has(rarityKey)) {
-            if(!meta.getPersistentDataContainer().get(rarityKey, PersistentDataType.STRING).equalsIgnoreCase(rarity.getInternalName())) {
-                return 0;
-            }
-        }
-
-        NamespacedKey percentKey = new NamespacedKey(plugin, "boostRarityPercent");
-        if(meta.getPersistentDataContainer().has(percentKey)) {
-            return meta.getPersistentDataContainer().get(percentKey, PersistentDataType.DOUBLE);
+        NamespacedKey boostedKey = new NamespacedKey(plugin, "boostRarity" + rarity.getInternalName());
+        if(meta.getPersistentDataContainer().has(boostedKey)) {
+            return meta.getPersistentDataContainer().get(boostedKey, PersistentDataType.DOUBLE);
         }
 
         return 0;
     }
 
-    public FishingRarity calculateRarity() {
+    public FishingRarity calculateRarity(Player player) {
         Random random = new Random();
-        double randomNumber = random.nextDouble(AcuaticLostWealth.config.totalRarityWeight);
+        double randomNumber = random.nextDouble(calculateTotalWeightUsingBoosts(player));
         double weight = 0;
         List<FishingRarity> rarities = AcuaticLostWealth.config.rarities;
 
         for(FishingRarity rarity : rarities) {
-            weight += rarity.getWeight();
+            weight += rarity.getWeight() + getBoostedAmount(rarity, getPlayerBoostedChance(rarity, player));
             if(randomNumber < weight) {
                 return rarity;
             }
@@ -282,35 +269,14 @@ public class Utilities {
         return rarities.get(rarities.size() - 1);
     }
 
-    public FishingRarity calculateRarityWithBoost(FishingRarity boostedRarity, double percent) {
-        double boostedAmount = getBoostedAmount(boostedRarity, percent);
-        Random random = new Random();
-        double randomNumber = random.nextDouble(AcuaticLostWealth.config.totalRarityWeight + boostedAmount);
-        double weight = 0;
-        List<FishingRarity> rarities = AcuaticLostWealth.config.rarities;
-
-        for(FishingRarity rarity : rarities) {
-            if(rarity.getInternalName().equalsIgnoreCase(boostedRarity.getInternalName())) {
-                weight += boostedAmount;
-            }
-            weight += rarity.getWeight();
-            if(randomNumber < weight) {
-                return rarity;
-            }
+    private double calculateTotalWeightUsingBoosts(Player player) {
+        double totalWeight = AcuaticLostWealth.config.totalRarityWeight;
+        for(FishingRarity rarity : AcuaticLostWealth.config.rarities) {
+            double boostedAmount = getBoostedAmount(rarity, getPlayerBoostedChance(rarity, player));
+            totalWeight += boostedAmount;
         }
 
-        return rarities.get(rarities.size() - 1);
-    }
-
-    public FishingRarity getRarity(Player player) {
-        for(FishingRarity configRarity : AcuaticLostWealth.config.rarities) {
-            double boosted = getPlayerBoostedChance(configRarity, player);
-            if(boosted != 0) {
-                return calculateRarityWithBoost(configRarity, boosted);
-            }
-        }
-
-        return calculateRarity();
+        return totalWeight;
     }
 
     public String getRandomCreature(FishingRarity rarity) {
@@ -334,28 +300,12 @@ public class Utilities {
      * @param rarity Parámetro exclusivo para el uso de rareza mejorada
      */
     public void addChanceToPlayer(Player player, double chance, int type, String rarity) {
-        NamespacedKey key;
-        switch(type) {
-            case 0:
-                key = new NamespacedKey(plugin, "baseItemChance");
-                break;
-            case 1:
-                key = new NamespacedKey(plugin, "baseCreatureChance");
-                break;
-            case 2:
-                key = new NamespacedKey(plugin, "baseDoubleChance");
-                break;
-            default:
-                key = new NamespacedKey(plugin, "boostRarityPercent");
-                NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
-                if(player.getPersistentDataContainer().has(rarityKey)) {
-                    if(!player.getPersistentDataContainer().get(rarityKey, PersistentDataType.STRING).equalsIgnoreCase(rarity)) {
-                        player.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, 0d);
-                    }
-                }
-                player.getPersistentDataContainer().set(rarityKey, PersistentDataType.STRING, rarity);
-                break;
-        }
+        NamespacedKey key = switch (type) {
+            case 0 -> new NamespacedKey(plugin, "baseItemChance");
+            case 1 -> new NamespacedKey(plugin, "baseCreatureChance");
+            case 2 -> new NamespacedKey(plugin, "baseDoubleChance");
+            default -> new NamespacedKey(plugin, "boostRarity" + rarity);
+        };
 
         if(player.getPersistentDataContainer().has(key)) {
             double playerChance = player.getPersistentDataContainer().get(key, PersistentDataType.DOUBLE);
@@ -375,21 +325,12 @@ public class Utilities {
      * @param rarity Parámetro exclusivo para el uso de rareza mejorada
      */
     public void removeChanceFromPlayer(Player player, double chance, int type, String rarity) {
-        NamespacedKey key;
-        switch(type) {
-            case 0:
-                key = new NamespacedKey(plugin, "baseItemChance");
-                break;
-            case 1:
-                key = new NamespacedKey(plugin, "baseCreatureChance");
-                break;
-            case 2:
-                key = new NamespacedKey(plugin, "baseDoubleChance");
-                break;
-            default:
-                key = new NamespacedKey(plugin, "boostRarityPercent");
-                break;
-        }
+        NamespacedKey key = switch (type) {
+            case 0 -> new NamespacedKey(plugin, "baseItemChance");
+            case 1 -> new NamespacedKey(plugin, "baseCreatureChance");
+            case 2 -> new NamespacedKey(plugin, "baseDoubleChance");
+            default -> new NamespacedKey(plugin, "boostRarity" + rarity);
+        };
 
         if(!player.getPersistentDataContainer().has(key)) {
             return;
@@ -467,9 +408,8 @@ public class Utilities {
     }
 
     public void addBoostRarityChance(ItemStack item, double chance, String rarityName) {
-        NamespacedKey percentKey = new NamespacedKey(plugin, "boostRarityPercent");
-        NamespacedKey rarityKey = new NamespacedKey(plugin, "boostRarity");
         FishingRarity rarity = getRarityByName(rarityName);
+        NamespacedKey boostedKey = new NamespacedKey(plugin, "boostRarity" + rarity.getInternalName());
         String loreLine = AcuaticLostWealth.config.boostChance
                 .replace("%boost_chance%", String.valueOf((int) (chance * 100)))
                 .replace("%rarity%", rarity.getName());
@@ -487,8 +427,7 @@ public class Utilities {
         lore.add(loreLine);
         meta.setLore(lore);
 
-        meta.getPersistentDataContainer().set(rarityKey, PersistentDataType.STRING, rarityName);
-        meta.getPersistentDataContainer().set(percentKey, PersistentDataType.DOUBLE, chance);
+        meta.getPersistentDataContainer().set(boostedKey, PersistentDataType.DOUBLE, chance);
         item.setItemMeta(meta);
     }
 
@@ -523,29 +462,14 @@ public class Utilities {
         return newWeight - boostedRarity.getWeight();
     }
 
-    private FishingRarity getBoostedRarity(Player player) {
-        for(FishingRarity rarity : AcuaticLostWealth.config.rarities) {
-            double boosted = getPlayerBoostedChance(rarity, player);
-            if(boosted != 0) {
-                return rarity;
-            }
-        }
-
-        return null;
-    }
-
     public String showRarityChance(String rarityName, Player player) {
         FishingRarity rarity = getRarityByName(rarityName);
-        double totalWeight = AcuaticLostWealth.config.totalRarityWeight;
+        double totalWeight = calculateTotalWeightUsingBoosts(player);
         double rarityWeight = rarity.getWeight();
 
-        FishingRarity boostedRarity = getBoostedRarity(player);
-        if(boostedRarity != null && rarity.getInternalName().equalsIgnoreCase(boostedRarity.getInternalName())) {
-            double boostPercent = getPlayerBoostedChance(rarity, player);
-            double boostedAmount = getBoostedAmount(rarity, boostPercent);
-            totalWeight += boostedAmount;
-            rarityWeight += boostedAmount;
-        }
+        double boostPercent = getPlayerBoostedChance(rarity, player);
+        double boostedAmount = getBoostedAmount(rarity, boostPercent);
+        rarityWeight += boostedAmount;
 
         double finalChance = rarityWeight / totalWeight * 100;
         return String.format("%.2f", finalChance);

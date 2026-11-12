@@ -82,7 +82,7 @@ public class PlayerFishListeners implements Listener {
     }
 
     private boolean spawnCreature(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilities.getRarity(player);
+        FishingRarity rarity = utilities.calculateRarity(player);
         if(UserManager.getPlayer(player).getSkillLevel(rarity.getSkill()) < rarity.getSkillLevel()) {
             return false;
         }
@@ -105,7 +105,7 @@ public class PlayerFishListeners implements Listener {
     }
 
     private void giveReward(PlayerFishEvent event, Player player) {
-        FishingRarity rarity = utilities.getRarity(player);
+        FishingRarity rarity = utilities.calculateRarity(player);
         Reward reward = utilities.getRandomReward(rarity);
         if(!rarity.getBroadcast().isEmpty()) {
             Bukkit.getServer().broadcastMessage(rarity.getBroadcast().replace("%player%", player.getName()));
